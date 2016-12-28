@@ -104,7 +104,6 @@ class DefaultController extends Controller
 					$key="t" . $global_order;
 					$res_container[$key]=$tri_container;
 				}
-				dump($res_container);
 				return $res_container;
 	
 	

@@ -14,48 +14,71 @@
     {% if formA is defined %}
     	{% include 'DRNewsBundle:base_views:news_add_form_fragment.html.twig' with {'form':  formA,'img': a_news.image} only %}
     {% endif %}
-
     <div class="row ">
-		<div class="col-sm-8 ">
-    		            <br>All current news (click any column's name to sort):
-		</div>
-    	<div class="col-sm-8 table_no_pad_no_marg_right ">
-    		<table id="simpleTable" class="table">
-                <thead>
-                    <tr>
-                    <th data-sort="int" class="table_backgr"> ID </th>
-                    <th data-sort="string" class="table_backgr"> Title </th>
-                    <th data-sort="string" class="table_backgr"> Category </th>                    
-                    <th data-sort="int" class="table_backgr"> Order </th>
-                    <th data-sort="string" class="table_backgr"> Tri-news </th>
-                    <th data-sort="string" class="table_backgr"> Author </th>
-                    <th data-sort="int" class="table_backgr"> Date </th>
-                    <th class="table_backgr">Modify</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for a_news in news %}
-            
-                	<tr class="table_row_fixed_size">
-                  		<td >{{ a_news.id }}</td>
-                  		<td  id="title_{{ a_news.id }}">{{ a_news.title  }}</td>
-                  		<td>{{ a_news.category }}</td>
-                  		<td>{{ a_news.ordernumber }}</td>
-                  		<td> {% if  a_news.partoftrinews%}Yes{% else %}No{% endif %}</td>
-                  		<td>{{ a_news.author }}</td>      		
-                  		<td data-sort-value="{{a_news.date | date("U")  }}">{{ a_news.date|date("d/m/y") }}</td>
-                  		<td><a class="btn btn-primary" href="{{ path('modify_news', { 'id': a_news.id }) }}">Modify</a></td>
-                  	</tr>
-                {% endfor %}
-                </tbody>
-            </table>
-    	</div>
-    	{% if formD is defined %}
-        	<div class="col-sm-4 table_no_pad_no_marg_left">
-                {% include 'DRNewsBundle:base_views:news_delete_form_fragment.html.twig' with {'form':  formD}only %}
-        	</div>
-    	{% endif %}
+    		<div class="col-sm-8 ">
+        		            <br>All current news (click any column's name to sort):
+    		</div>
+    		<div class="col-sm-12 table_no_pad_no_marg_right ">
+    	        {% if formD is defined %}
+                    {{ form_start(formD) }}
+                    {{ form_errors(formD.news) }}
+                {% endif %}     
+        		<table id="simpleTable" class="table">
+                    <thead>
+                        <tr>
+                        <th data-sort="int" class="table_backgr"> ID </th>
+                        <th data-sort="string" class="table_backgr"> Title </th>
+                        <th data-sort="string" class="table_backgr"> Category </th>                    
+                        <th data-sort="int" class="table_backgr"> Order </th>
+                        <th data-sort="string" class="table_backgr"> Tri-news </th>
+                        <th data-sort="string" class="table_backgr"> Author </th>
+                        <th data-sort="int" class="table_backgr"> Date </th>
+                        {% if formD is defined %}
+                        	<th class="table_backgr">Delete</th>
+                        {% else %}
+                        	<th class="table_backgr">Modify</th>
+                        {% endif %}
+                        </tr>
+                    </thead>
+               
+                    <tbody>
+                    {% for a_news in news %}                            
+                    	<tr class="table_row_fixed_size">
+                      		<td >{{ a_news.id }}</td>
+                      		<td  id="title_{{ a_news.id }}">{{ a_news.title  }}</td>
+                      		<td>{{ a_news.category }}</td>
+                      		<td>{{ a_news.ordernumber }}</td>
+                      		<td> {% if  a_news.partoftrinews%}Yes{% else %}No{% endif %}</td>
+                      		<td>{{ a_news.author }}</td>      		
+                      		<td data-sort-value="{{a_news.date | date("U")  }}">{{ a_news.date|date("d/m/y") }}</td>
+                      		{% if formD is defined %}
+                      		    {% set d_news=formD.news[loop.index-1] %}
+                            	<td>{{ form_errors(d_news) }}
+                                    {{ form_widget(d_news) }}</td>
+                            {% else %}
+                            	<td><a class="btn btn-primary" href="{{ path('modify_news', { 'id': a_news.id }) }}">Modify</a></td>
+                            {% endif %}
+                      		
+                      	</tr>
+                    {% endfor %}
+                    </tbody>                
+                </table>
+        </div>
 	</div>
+	{% if formD is defined %}
+    <div class="row">
+		<div class="col-sm-12 textcenter">
+                		<br>
+                        {{ form_widget(formD.delete, {'attr': {'class': 'btn btn-warning'}}) }}
+                        <br>
+                        {{ form_errors(formD) }}
+                        {{ form_rest(formD) }}
+                   		{{ form_end(formD) }}
+                   		<br><br><br>
+		</div>
+    </div>
+    {% endif %}
+    <div class="row">
     	{% if formDA is defined %}
             <div class="row">
             	{% if is_granted('ROLE_SUPER_ADMIN') %}	
@@ -77,6 +100,7 @@
                 </div>
             </div>
     	{% endif %}
+    </div>
 
      <br> <br> <br> <br>
 {% endblock %}

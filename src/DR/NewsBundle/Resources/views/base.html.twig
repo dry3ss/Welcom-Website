@@ -104,8 +104,7 @@
         	<script src="{{ asset('js/jquery.min.js') }}"></script>
         	<script src="{{ asset('js/bootstrap.min.js') }}"></script>
         	<script src="{{ asset('js/debounce.js') }}"></script>
-        	
-            {% if CONF_hide_menu is defined and CONF_hide_menu %}   	
+        	  	
         		<script src="{{ asset('js/hide_menu_small_device.js') }}"></script> 
         		<script>
         		    {% block pass_var_hide_menu %}
@@ -124,7 +123,7 @@
             		    });
         		    {% endblock %}
         		</script>
-            {% endif %}     	
+  	
         	{% block stop_fix_logo %}     	
         	{% endblock %}
         	{% block background_and_animation %}     	

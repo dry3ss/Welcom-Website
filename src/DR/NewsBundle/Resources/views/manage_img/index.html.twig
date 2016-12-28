@@ -15,11 +15,10 @@
 		<div class="col-sm-8 ">
     		<br>All current Images (click any column's name to sort):
 		</div>
-	    {% if formDA is defined %}
-    	<div class="col-sm-10 table_no_pad_no_marg_right ">
-    	{% else %}
-    	<div class="col-sm-12  ">
-    	{% endif %}
+	       {% if formD is defined %}
+                    {{ form_start(formD) }}
+                    {{ form_errors(formD.imgs) }}
+            {% endif %}
     		<table id="simpleTable" class="table">
                 <thead>
                     <tr>
@@ -29,7 +28,11 @@
                     <th data-sort="string" class="table_backgr"> Category </th>
                     <th data-sort="string" class="table_backgr"> Credit </th>
                     <th data-sort="int" class="table_backgr"> News linked </th>
-                    <th class="table_backgr">Modify</th>
+                    {% if formD is defined %}
+                    	<th class="table_backgr">Delete</th>
+                    {% else %}
+                    	<th class="table_backgr">Modify</th>
+                    {% endif %}
                     </tr>
                 </thead>
                 <tbody>
@@ -46,17 +49,32 @@
                   		{% else %}
                   			<td data-sort-value="0"><a class="btn btn-primary" href="#" disabled>No</a></td>
                   		{% endif %}
-                  		<td><a class="btn btn-primary" href="{{ path('modify_img', { 'id': img.id }) }}">Modify</a></td>
+                  		
+                  		{% if formD is defined %}
+                  		    {% set d_img=formD.imgs[loop.index-1] %}
+                        	<td>{{ form_errors(d_img) }}
+                                {{ form_widget(d_img) }}</td>
+                        {% else %}
+                        	<td><a class="btn btn-primary" href="{{ path('modify_img', { 'id': img.id }) }}">Modify</a></td>
+                        {% endif %}                  		
                   	</tr>
                 {% endfor %}
                 </tbody>
             </table>
     	</div>
-    	{% if formD is defined %}
-    	<div class="col-sm-2 table_no_pad_no_marg_left">    	
-                 {% include 'DRNewsBundle:base_views:img_delete_form_fragment.html.twig' with {'form':  formD, 'images': images}only %} 
-    	</div>
-    	{% endif %}
+    {% if formD is defined %}
+    <div class="row">
+		<div class="col-sm-12 textcenter">
+                		<br>
+                        {{ form_widget(formD.delete, {'attr': {'class': 'btn btn-warning'}}) }}
+                        <br>
+                        {{ form_errors(formD) }}
+                        {{ form_rest(formD) }}
+                   		{{ form_end(formD) }}
+                   		<br><br><br>
+		</div>
+    </div>
+    {% endif %}
     	
     	{% if formDA is defined %}
 			<div class="row">

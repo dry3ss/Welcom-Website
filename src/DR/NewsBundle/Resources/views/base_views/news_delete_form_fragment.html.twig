@@ -9,8 +9,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                {% for a_news in form.news %}
-            
+                {% for a_news in form.news %}            
                 	<tr>
                   		<td class="table_row_fixed_size">{{ form_errors(a_news) }}
                             {{ form_widget(a_news) }}</td>
