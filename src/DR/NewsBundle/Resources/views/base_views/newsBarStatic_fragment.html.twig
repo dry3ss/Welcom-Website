@@ -1,0 +1,22 @@
+        <div class="height_100 no_pad_no_marg " style="position: relative;left:0;top:27%;top:50vh;">
+                    	<div class="row newsbar_fake_border">
+                    	</div>
+                    	{% if a_news.published %}	
+                        	<div class="row  height_100">
+                        		<div class="newsbar_height newsbar_container_white col-sm-12 ">		
+                        			<div class="row  height_100pc">
+                        				<div class=" newsbar_text_padding  col-sm-offset-7 col-sm-4 height_100pc">
+                        					<newsbar_title>
+                        					    {% block NewsBarTitle %}{{a_news.title |raw  }}{% endblock %}
+                        					</newsbar_title>
+                        					<newsbar_extract><br>
+                            					{% block NewsBarExract %}
+                                					{{a_news.extract|raw }} 
+                            					{% endblock %}
+                        					</newsbar_extract>                        					
+                        				</div>
+                        			</div>
+                        		</div>
+                        	</div>
+                        {% endif %}
+        </div>

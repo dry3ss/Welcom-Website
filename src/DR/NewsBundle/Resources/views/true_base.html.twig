@@ -1,0 +1,133 @@
+{% extends 'DRNewsBundle::base.html.twig' %}
+
+
+{% block header %}
+{% endblock %}
+
+{% block background %}
+	{% if CONF_anim_newsbar_and_backg and TWIG_anim_bckg_newsbar_list is defined and TWIG_anim_bckg_newsbar_list !=null %}
+	    {% block animBackground %} {# It expects a list of img named 'imgs' #}
+		    {%  include 'DRNewsBundle:base_views:animBackGr_fragment.html.twig' with {'newslist':  TWIG_anim_bckg_newsbar_list} only %}
+        {% endblock %}
+    {%elseif CONF_static_bckg and TWIG_static_bckg_img is defined  and TWIG_static_bckg_img !=null %}
+        {% block staticBackground %} {# It expects ONE img named 'img' #}
+    		{% include 'DRNewsBundle:base_views:staticBackGr_fragment.html.twig' with {'img':  TWIG_static_bckg_img} only %}
+        {% endblock %}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    {% block NewsBarPage %}
+    	{% if CONF_static_newsbar and TWIG_newsbar_a_news is defined and TWIG_newsbar_a_news!=null%}
+    	    {% block NewsBarStatic %}{# It expects ONE news named 'a_news' #}	    
+		   	    {% include "DRNewsBundle:base_views:newsBarStatic_fragment.html.twig" with {'a_news':  TWIG_newsbar_a_news} only  %}
+			{% endblock %}
+		{% elseif  CONF_anim_newsbar_and_backg and TWIG_anim_bckg_newsbar_list is defined and TWIG_anim_bckg_newsbar_list!=null%}
+		    {% block NewsBarAnim %}{# It expects a list of news named 'news' #}   	  	    
+		        {% include "DRNewsBundle:base_views:newsBarAnimList_fragment.html.twig" with {'newslist':  TWIG_anim_bckg_newsbar_list} only %}
+		    {% endblock %}
+		{% endif %}          
+    {% endblock %}
+    {% if CONF_logo_scrollfix%}
+        {% block LogoScrollFix %}{# It expects NOTHING #}
+            {% include("DRNewsBundle:base_views:logoScrollFix_fragment.html.twig") %}
+        {% endblock %}
+    {% endif %}
+    {% block News %}
+    	{% if CONF_newslist and TWIG_a_news is defined and TWIG_a_news !=null %}
+            {% block NewsSingle %}{# It expects ONE news named 'a_news' #}             
+                {% include "DRNewsBundle:base_views:news_fragment.html.twig" with  {'a_news':  TWIG_a_news} only %}	    
+            {% endblock %}
+        {% endif %}
+        {% if CONF_newslist and TWIG_newslist_main is defined and TWIG_newslist_main !=null %}      
+    		{% for news_or_tri_news in TWIG_newslist_main  %}
+    			{% if news_or_tri_news is iterable%} 
+    			    {# if it's an array #}
+    				{% include "DRNewsBundle:base_views:news_TRI_fragment.html.twig" with {'tri_news_array': news_or_tri_news } only %}
+    				
+    			{% else %}
+    				{% include "DRNewsBundle:base_views:news_fragment.html.twig" with  {'a_news':  news_or_tri_news} only %}
+    			{% endif %}
+    		{% endfor %}
+	    {% endif %}   
+    {% endblock %}
+    {% block custom_bf_footer %}
+    {% endblock %}
+{% endblock %}
+
+{% block pre_and_footer %}
+    {% block emptyPreFooter %}
+    	<div class="row  height_pre_footer">
+        	<div class= "col-sm-12 height_100pc">
+        	{% if not CONF_logo_scrollfix %}
+        		<img src={{  asset("banner_welcom.png") }} id="logo_scroll_fix" class="max_width_100 position_absolute "/>
+        	{% endif %}
+        	</div>		
+        </div>
+    {% endblock %}
+    {% block footer_ %}
+    	<div class="position_absolute null_pos_bottom no_pad_no_marg">
+        	<div class="row ">
+            	<div class= "col-sm-12 backgr_style height_100pc no_pad_no_marg" >
+            		<footer> 
+            		{% block footer %}
+            			{% include "DRNewsBundle:base_views:footer_fragment.html.twig" with  {} only %}
+            		{% endblock %}
+            		</footer>
+            	</div>		
+            </div>
+        </div>
+    {% endblock %}
+{% endblock %}
+
+{% block stop_fix_logo %}
+	{% if CONF_logo_scrollfix  %}
+		<script src="{{ asset('js/stop_fix_logo_backgr.js') }}"></script>
+		<script>
+    		$(function() 
+            {         
+    			autoScrollFix(scroll_fix_param); 
+            });
+        </script>
+	{% endif %}
+{% endblock %}
+{% block background_and_animation %} 
+	{% if CONF_anim_newsbar_and_backg  %}
+		<script src="{{ asset('js/hide_show_loop.js') }}"></script>
+		<script>
+    		$(function() 
+            {  
+                //for the background images:
+                var first_img=$(loop_images_param.sel).first(loop_images_param.sel);      	         
+    			var loop_images_variables=
+    		    { 
+    					state_scroll: true,
+    					curr: first_img,
+    					nex: first_img.next(loop_images_param.sel),
+    					i:1
+    			};
+    			autoShowHideLoop(loop_images_param,loop_images_variables); 
+				//for the credit of those images
+    			var first_credit=$(loop_credit_param.sel).first(loop_credit_param.sel);      	         
+    			var loop_credit_variables=
+    		    { 
+    					state_scroll: true,
+    					curr: first_credit,
+    					nex: first_credit.next(loop_credit_param.sel),
+    					i:1
+    			};             	
+    			autoShowHideLoop(loop_credit_param,loop_credit_variables); 
+    			//for the news extract and title corresponding to those images
+            	var first_news=$(loop_news_param.sel).first(loop_news_param.sel);      	         
+    			var loop_news_variables=
+    		    { 
+    					state_scroll: true,
+    					curr: first_news,
+    					nex: first_news.next(loop_news_param.sel),
+    					i:1
+    			};             	
+    			autoShowHideLoop(loop_news_param,loop_news_variables); 				
+            });
+		</script>
+	{% endif %}
+{% endblock %}   

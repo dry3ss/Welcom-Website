@@ -1,0 +1,75 @@
+{% extends 'DRNewsBundle::base.html.twig' %}
+
+
+{% block main %}
+     <br> <br> <br> <br>
+     <div style="color:black;">
+         <h1 style="display: inline;">Basic principle:</h1>
+         <br> 
+          A set of news is what's displayed on each and every page of the site. 
+         <br>The <h2 style="display: inline;">category</h2> of each news is what determines on which page will a news be displayed.
+         <div style="margin-left:20px;">
+             <br>-The current categories of the site are:
+             <div style="margin-left:20px;">
+             	    --> "home" => Homepage
+             	<br>--> "campus" => Campus
+             	<br>--> "housing" => Housing
+             	<br>--> "LIF" => Life in France
+             	<br>--> "help" => Help
+             </div>
+             <small>(Note: creating a new category's name is not enough for a new page with this category to appear, 
+             someone (who has access to the ftp)has to manually add a Controller ( a XXXController.php in src/DR/NewsBundle/Controller ) and 
+             a view ( a XXX.html.twig in src/DR/NewsBundle/Resources/views/_name_of_the_category_) referenced by
+             the controller, and finally add an access button in base.html.twig )</small>
+             <br>
+             <br>-Each category name can (and has to) be preponed by <b>"main_"</b> in order to appear in the dynamic newsbar on the main page.
+             If it is the case, the image atached to the news will be used for the background (it has to be quite big in number
+             of pixels) no matter which option has been ticked regarding Imgbftitle,Imgaftitle,Imgafcont. The internal name of the page's route,
+             (not necessarily the same unique part found in the URL) has to be provided in the <b>LinkNews</b> field (it's the Read More link).
+         
+             <br><br>-<b>Inside a category, the news are sorted by ascending order</b> (which migt not
+             be really logical for a site, and it can be changed quite easilly, but right now that's how it is). Since by
+             default they have been entered with an exact 10 minutes interval (and even a one second difference is enough to change
+             the order), you have plenty of available slots to insert news.
+         </div>
+         <br>Each news mush have a <h2 style="display: inline;">title</h2>, but you can <b>untick "Printtitle" </b>
+         if you don't want it to appear.
+         <br>Each news can have a <h2 style="display: inline;">content</h2>, but you can just <b>leave it blank</b> 
+         or <b>untick "Printcontent"</b> if you don't want it to appear.      
+         <br>Each news can have <h2 style="display: inline;">images</h2> attached to it, there are two types of images:
+          <div style="margin-left:20px;"> 
+          	a)Only <b>ONE single image</b> can be displayed in a centered fashion above the title (imgbftitle),
+          	between the title and the content (imgaftitle), or after the content (imgafcontent) if the proper option is
+          	ticked. 
+			<div style="margin-left:20px;"> 
+				Example (here before title):<br>
+				<div style="margin-left:20px;"> 
+                  	<img src="tuto_img_1.png">
+                  	<br>Note: it works better if the image is of a wallpaper size in term of pixels, as it covers the whole screen's
+                  	width.
+              	</div>
+          	</div>
+          	b) <b>As many images as you wish can be added inside the content block</b> using the 8th icon from the right of
+          	the middle column. A lot of parameters are available for you to tailor how and where it will be. Note that 
+          	you'll have to upload the image online to an image hosting service first.																															
+         	<br>Note: Those two types of images are also available for the "three news on a row" configuration,
+         	example:
+         	<div style="margin-left:20px;"> 
+         	</div>
+         </div>
+         <br>Note: This way if you want to only include an image to insert in the flow wherever you want,
+          just create a news with an image, any of the three option for the image's location,
+           a blank content and hide it's title.
+           
+     </div>
+
+    	<h1>ATTENTION:</h1> <h2>There will be no secondary prompt once you click a Delete button</h2>
+    	<h1>ATTENTION:</h1> <h2>If you delete the news, the image's link will be updated, but the image will live on
+    	as a standalone, if you want to easily delete a linked image go <a class="btn btn-warning" href="{{ path('delete_img') }}">here</a>
+    	 and sort by linked news then delete it</h2>
+    	 
+    	 
+    	 
+ 
+{% endblock %}
+

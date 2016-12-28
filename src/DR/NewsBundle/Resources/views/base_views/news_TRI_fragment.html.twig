@@ -1,0 +1,64 @@
+
+{# ------------------------------------------  TITLE --------------------- --------------------- #}
+<div class="row">
+    <div class="row_same_height">
+    {% for a_news in tri_news_array %}
+        {% if a_news.title is defined and a_news.printtitle %}
+        	<div class="col-sm-4 col_same_height col_middle  news_title_back_color">
+        		<div class="">
+        			<div class="row ">
+                    	<div class="col-sm-12  ">
+                    		<div class="row ">			
+                    			<div class="col-sm-offset-2 .col_middle  col-sm-8 textcenter padding_sub_title">
+                    				<style_sub_title class="textcenter">
+                    				    {{ a_news.title }}
+                    				</style_sub_title>
+                    			</div>
+                    		</div>
+                    	</div>
+                	</div>
+        		</div>    	
+        	</div>
+    	{% endif %}
+    {% endfor %}
+    </div> 
+</div> 
+{# ------------------------------------------  IMAGE --------------------- --------------------- #}
+<div class="row">
+    <div class="row_same_height news_title_back_color">
+    	{% for a_news in tri_news_array %}
+        	<div class="col-sm-4 col_same_height col_middle news_title_back_color">
+                {% if (a_news.imgbftitle or a_news.imgaftitle or a_news.imgafcont ) and a_news.image !=null %}
+                   		<div class="row ">
+                        	<div class="col-sm-12 no_pad_no_marg ">
+            		            {%  include 'DRNewsBundle:base_views:news_image_fragment.html.twig' with {'image':  a_news1.image} only %}
+                         	</div>
+                        </div>       
+                {% endif %}
+        	</div>
+        {% endfor %}    	 
+    </div> 
+</div> 
+
+{# ------------------------------------------  CONTENT --------------------- --------------------- #}
+<div class="row backgr_style">
+	{% for a_news in tri_news_array %}
+		{% if a_news.content is defined and a_news.printcontent%}
+            <div class="col-sm-4 ">
+            	<div class="row">
+                	<div class="page_top_half_height col-sm-12 "></div>
+                    <div class="col-sm-offset-1 col-sm-10 height_100pc ">
+                        <div class="row height_100pc">
+                        	<div class="col-sm-12 main_padding_content main_content_backgr">
+                        		<style_content> 
+                        		        {{ a_news.content|raw }}                  
+                        		</style_content>
+                        	</div>
+                        </div>		
+                    </div>
+                    <div class="page_top_half_height col-sm-12 "></div>
+            	</div>
+            </div>
+        {% endif %}
+    {% endfor %} 
+</div> 

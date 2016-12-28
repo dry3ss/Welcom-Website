@@ -1,0 +1,564 @@
+/*----------------DEBUG-------------------*/
+.back_gr
+{
+	background-color: green;
+	//border: 2px solid black;
+}
+
+.backgr_admin
+{
+	background-color: #fdfdfd;
+
+  border: 2px solid black;
+  border-radius: 6px;
+}
+#color_blue, .color_blue
+{
+	/color: rgba(252,121,45,1);
+	color: rgba(100,162,217,1);
+}
+
+
+
+/*----------------COL SAME HEIGHT------------------*/
+.row_same_height 
+{
+  display: table;
+  table-layout: fixed;
+  height: 100%;
+  width: 100%;
+}
+.col_same_height 
+{
+  display: table-cell;
+  float: none;
+  height: 100%;
+}
+.inside_same_full_height 
+{
+  /*
+  // if you want to give content full height give him height: 100%;
+  // with content full height you can't apply margins to the content
+  // content full height does not work in ie http://stackoverflow.com/questions/27384433/ie-display-table-cell-child-ignores-height-100
+  */
+  height: 100%;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.col_middle 
+{
+  vertical-align: middle;
+}
+
+
+
+/*------------------PRE-FOOTER/ FOOTER----------------------*/
+.height_pre_footer
+{
+	height: 620px;
+	height: 94vh;
+}
+
+footer_text_style
+{
+	font-family: Acme,'Architects daughter','Century Gothic', 'sans-serif';
+	font-size: 17px;
+	color:#eaeaea;
+}
+.height_footer
+{
+	min-height: 65px;
+	min-height: 10vh;
+}
+.footer_padding_img
+{
+	padding-top: 7px;
+	padding-top: 1vh;
+	/padding-left: 50px;
+}
+.footer_padding_text
+{
+	padding-top: 14px;
+	padding-left: 14px;
+	padding-right: 14px;
+	padding-top: 2vh;
+}
+.footer_padding_text_center_vert
+{
+	padding-top: 21px;
+	padding-top: 3vh;
+}
+.footer_logo_size
+{
+	max-height: 65px;
+	max-height: 10vh;
+}
+
+
+
+/*-----------NAV BAR ----------*/
+.logo_sized_bar
+{
+	max-width: 150px;
+	max-height: 50px;
+}
+.navbar_text, .readmore_link_style
+{
+	font-family: "Coiny",cursive;
+	font-size:17px;
+}
+
+/*-----------------LOGO BAKCGROUND MANAGEMENT----------*/
+.logo_centred_vert_mob
+{
+	position: absolute;
+	top: 12vh;
+	left:0;
+}
+.logo_centred_vert_fix
+{
+	position: fixed;
+	top: 12vh;
+	left:0;
+}
+/*------------TABLE for News/Image editing-------------*/
+.table_backgr
+{
+	  background-color:rgba(0,0,0,0.2);
+}
+.table_row_fixed_size
+{
+	height:70px;	
+}
+.table_no_pad_no_marg_left
+{
+	padding-left: 0px;
+	margin-left: 0px;
+}
+.table_no_pad_no_marg_right
+{
+	padding-right: 0px;
+	margin-right: 0px;
+}
+
+/*------------------PAGE TOP ----------------*/
+.page_top_window_vue_height
+{
+	height: 10vh;
+}
+.marg_left_neg
+{
+	margin-left: -16px;
+}
+.news_title_back_color
+{
+	  background-color:rgba(0,0,0,0.7);
+}
+.page_top_height
+{
+	height: 10vh;
+}
+.page_top_half_height
+{
+	height: 5vh;
+}
+.page_top_height_img
+{
+	height: 10vh;
+}
+.backgr_style
+{
+  background-color:#000d1a;
+}
+style_title
+{
+	font-size: 50px;
+	font-family: Acme,"Comic Sans MS",Verdana;
+	color: rgba(252,121,45,1);	
+}
+style_sub_title
+{
+	font-size: 200%;
+	font-family: Acme,"Comic Sans MS",Verdana;
+	color: rgba(252,121,45,1);	
+}
+
+style_news_published
+{
+	font-size: 35px;
+	font-family: 'Architects daughter',cursive;
+	color: rgba(100,162,217,1);		
+}
+style_news_author
+{
+	font-size: 35px;
+	font-family: 'Kaushan Script',cursive;
+	color: rgba(100,162,217,1);		
+}
+style_content
+{
+	font-size: 25px;
+	font-family: 'Architects daughter',Verdana;
+	line-height:105%;
+	color: rgba(100,162,217,1);	
+	
+}
+
+style_credit
+{
+	font-size: 15px;
+	font-family: 'Architects daughter',Verdana;
+	line-height:100%;
+	color: rgba(100,162,217,1);	
+	
+}
+.main_padding_content
+{
+	  	padding-right: 10%;
+  	    padding-left: 10%;
+	    padding-top: 5%;
+	    padding-bottom: 5%;
+
+	    border-radius: 6px;	    	
+}
+.news_title_height
+{
+	
+}
+.main_content_backgr
+{
+	background-color: rgba(0,0,0,0.8);
+}
+.padding_title
+{
+	  	padding-right: 10px;
+  	    padding-left: 10px;
+	    padding-top: 50px;
+	    padding-bottom: 0px;
+	    	
+		padding-right: 8%;
+  	    padding-left: 8%;
+	    padding-top: 3%;
+	    padding-bottom: 0px;
+}
+.padding_sub_title
+{
+	  	padding-right: 5px;
+  	    padding-left: 5px;
+	    padding-top: 25px;
+	    padding-bottom: 0px;
+	    	
+		padding-right: 4%;
+  	    padding-left: 4%;
+	    padding-top: 1%;
+	    padding-bottom: 0px;
+}
+/*----------------EQUALIZE COLUMNS HEIGHTS----------*/
+@media only screen and (min-width : 768px) 
+{
+    .equalizer_row {
+        display: table;
+          border-collapse: collapse;
+  border-spacing: 0;
+    }
+    .equalized_col{
+        float: none;
+        display: table-cell;
+        vertical-align: top;
+    }
+}
+/*---------------------Newsbar--------------------*/
+/*---ARROW-------*/
+.newsbar_arrow
+{
+	width: 50px;
+	height: 50px;
+	top: 3%;	
+	top: 33vh;	
+}
+.newsbar_arrow__left
+{
+	left: 20px;
+}
+.newsbar_arrow__right
+{
+	right: 20px;
+}
+/*---STYLE-------*/
+newsbar_title
+{
+	font-size: 43px;
+	font-family: Coiny, cursive;
+	color: black;
+}
+newsbar_extract
+{
+	font-size: 20px;
+	font-family: 'Architects daughter',Verdana;
+	color: #27393f;
+}
+.newsbar_fake_border
+{
+  height: 5px;
+  background-color: rgba(255, 255, 255, 0.5);		
+}
+.newsbar_container_white
+{
+	    background-color: rgba(255, 255, 255, 0.5);
+	    text-align: left;
+	    border-style: solid;
+	    border-width: 0px 10px 0px 0px;	
+	    border-color: rgba(255, 255, 255, 1);
+}
+
+.no_display /*This is for the bakcground images (don't show them at first)  */
+{
+	display: none;
+}
+.newsbar_img_credit_position
+{
+	top:21px;
+	left:0;
+	position: absolute;
+}
+
+/*---HEIGHT-------*/
+.newsbar_height
+{
+  max-height: 300px;
+}
+.max_h_w /* for the images */
+{
+  max-width:200vmax;
+  max-height:100vmax;
+  min-width:100vw;	
+}
+.newsbar_text_padding
+{
+  	    padding-right: 10px;
+  	    padding-left: 20px;
+	    padding-top: 0px;
+	    padding-bottom: 10px;
+}
+
+/* ------------------STYLES---------------------------*/
+html,body {height:100%;font-size: 100%;} 
+header
+{
+	margin-bottom: 30px;	
+}
+@media only screen and (max-width : 768px) 
+{
+	header
+	{
+		margin-bottom: 70px;	
+	}
+	
+}
+body 
+{
+  background-color: #e6e6ff;
+}
+/*used for the "container" of the main*/
+
+n0[class*="col-"] {
+  line-height: 130%;
+  text-align: left;  
+}
+/*used for the "container" of the flashmessage*/
+f0[class*="col-"] {
+  background-image: linear-gradient(0deg, #3399ff, #0066cc);
+  line-height: 130%;
+  text-align: left;  
+}
+
+/* ---------- PADDING MARGING---------------*/
+.no_pad_no_marg, div, body, .row
+{
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+.no_marg
+{
+  margin-bottom: 0px;
+  margin-top: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+
+/* ---------------------POSITION-----------------*/
+.fixed_top
+{
+	position: fixed;
+	top 0px;
+	left 0px;
+	padding-right: 0;
+    padding-left: 0;
+    z-index: 1030;
+}
+.position_relative
+{
+		position: relative;
+}
+.position_absolute
+{
+		position: absolute;
+}
+.position_fixed
+{
+		position: fixed;
+}
+.null_pos
+{
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+}
+.null_pos_bottom
+{
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+}
+.null_pos_top
+{
+	top: 10px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+}
+
+/* --------------------WIDTH & HEIGHT ----------------*/
+.min_width_100
+{
+	min-width: 100vh;	
+}
+.max_width_100pc
+{
+	max-width: 100%;	
+}
+.max_width_100
+{
+	max-width: 100vw;	
+}
+.min_width_100vw
+{
+	min-width: 100vw;	
+}
+.height_auto_width_100
+{
+	width: 100vw;
+	height: auto;
+}
+.height_100
+{
+	height: 100vh;
+}
+.height_100pc
+{
+	height: 100%;
+}
+.max_height_100pc
+{
+	max-height: 100%;
+}
+.height_20
+{
+	height: 150px;
+	height: 20vh;
+}
+.width_175px
+{
+	width:175px;
+}
+.width_100pc
+{
+	width: 100%;	
+}
+.width_98
+{
+	width: 98vw;	
+}
+
+/*-------------------- Z INDEX---------------------*/
+.heavy_z_index
+{
+	    z-index: 1000;
+}
+.normal_z_index
+{
+	    z-index: 10;
+}
+.base_z_index
+{
+	z-index: -100;
+}
+.light_z_index
+{
+	    z-index: 1;
+}
+
+/*----------Text alignment----------------------*/
+.textleft
+{
+		text-align: left;  
+}
+.textright
+{
+		text-align: right;  
+}
+.textcenter
+{
+	text-align: center;  
+}
+
+/*---------------------PARALLAX BELLOW----------------------------------------*/
+.overflowX_hidden
+{
+	  overflow-x: hidden;
+}
+.parallax__group {
+  position: relative;
+  height: 100vh;
+  transform-style: preserve-3d;
+}
+.parallax {
+  perspective: 1px;
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  position: relative;
+  perspective-origin-x: 100%;
+}
+.parallax__layer {
+  perspective-origin-x: 100%;
+  overflow-y: auto;
+  position: absolute;
+  top: 0;
+  right: 0; 
+  bottom: 0;
+  left: 0;
+  text-align: center;
+  vertical-align: -30%;
+}
+.parallax__layer--base {
+  -webkit-transform: translateZ(0px);
+  transform: translateZ(0);
+}
+.parallax__layer--back {
+  -webkit-transform: translateZ(-1px);
+  transform: translateZ(-1px)scale(2);;
+}
+/*hides the scrollbar (disabled now)  (important for the parralax) */
+/::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
+}

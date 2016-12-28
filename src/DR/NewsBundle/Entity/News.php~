@@ -1,0 +1,515 @@
+<?php
+
+namespace DR\NewsBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use DR\ImageBundle\Entity\ImageCont;
+
+
+use Psr\Log\LoggerInterface;//debug
+
+/**
+ * News
+ *
+ * @ORM\Table(name="news")
+ * @ORM\Entity(repositoryClass="DR\NewsBundle\Repository\NewsRepository")
+ */
+class News
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date", type="datetime")
+     */
+    private $date;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=255)
+     */
+    private $title;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="author", type="string", length=255)
+     */
+    private $author;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="content", type="text", nullable=true)
+     */
+    private $content;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="category", type="string", length=255)
+     */
+    private $category;
+
+    /**
+    * @ORM\Column(name="published", type="boolean",nullable=false)
+    */
+    private $published = true;
+    
+    
+    /**
+     * @ORM\Column(name="imgbftitle", type="boolean",nullable=false)
+     */
+    private $imgbftitle = true;
+    
+    /**
+     * @ORM\Column(name="imgaftitle", type="boolean",nullable=false)
+     */
+    private $imgaftitle = false;
+    
+    /**
+     * @ORM\Column(name="imgafcont", type="boolean",nullable=false)
+     */
+    private $imgafcont = false;
+    
+    /**
+     * @ORM\Column(name="printtitle", type="boolean",nullable=true)
+     */
+    private $printtitle = true;
+    
+    /**
+     * @ORM\Column(name="printcontent", type="boolean",nullable=true)
+     */
+    private $printcontent = true;
+    
+    /**
+     * @ORM\Column(name="linknews", type="string",nullable=true)
+     */
+    private $linknews;
+    
+    /**
+    * @ORM\OneToOne(targetEntity="DR\ImageBundle\Entity\ImageCont", 
+    	cascade={"persist", "remove"} , inversedBy="news")
+    * @ORM\JoinColumn(name="image_id", referencedColumnName="id")
+    */
+    protected $image;
+    
+    /**
+     * @Assert\Type("bool")
+     */
+    protected $to_be_deleted;
+    
+    
+    /**
+     * @ORM\Column(name="partoftrinews", type="boolean",nullable=true)
+     */
+    private $partoftrinews = false;
+    
+    /**
+     * @ORM\Column(name="ordernumber", type="integer",nullable=false)
+     */
+    private $ordernumber;
+    
+    public function __construct()
+    {
+    	$this->date = new \DateTime();
+    	$this->category = "NoCategory";
+    	$this->image = new ImageCont();
+    	$this->author="admin";
+    	$this->published=true;
+    	$this->to_be_deleted=false;
+    	$this->imgbftitle=true;
+    	$this->imgaftitle=false;
+    	$this->imgafcont=false;
+    	$this->linknews='';
+   		$this->printcontent=true;
+   		$this->printtitl=true;
+   		$this->partoftrinews=false;
+   		
+    }
+    
+    
+    /**
+     * Set to_be_deleted
+     *
+     * @return News
+     */
+    public function setToBeDeleted($bol)
+    {
+    	$this->to_be_deleted = $bol;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get to_be_deleted
+     *
+     * @return bool
+     */
+    public function getToBeDeleted()
+    {
+    	return $this->to_be_deleted;
+    }
+
+    
+    
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set date
+     *
+     * @param \DateTime $date
+     *
+     * @return News
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * Get date
+     *
+     * @return \DateTime
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     *
+     * @return News
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set author
+     *
+     * @param string $author
+     *
+     * @return News
+     */
+    public function setAuthor($author)
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * Get author
+     *
+     * @return string
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    /**
+     * Set content
+     *
+     * @param string $content
+     *
+     * @return News
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    /**
+     * Get content
+     *
+     * @return string
+     */
+    public function getContent()
+    {
+        return ($this->content) ;
+    }
+    
+    /**
+     * Get extract of max (@param) M characters
+     * @param int M
+     * @return string
+     */
+    public function getExtract($M=120)
+    {
+    	$cont=$this->getContent();
+		if (strlen($cont)<=$M)
+			return $cont;
+		else
+		{
+			$dif=strlen($cont)-$M;
+			$cont_rev=strrev($cont);
+			$pos=strpos($cont_rev," ",$dif);//look for the first occurence
+			//of a whitespace before (hence the reversed string) out limit			
+			if( $pos <0)
+				return "";
+			$pos=strlen($cont)-$pos;
+			return(substr($cont,0,$pos) . "...");
+		}
+    }
+    
+    
+
+    /**
+     * Set category
+     *
+     * @param string $category
+     *
+     * @return News
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return string
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * Set published
+     *
+     * @param boolean $published
+     *
+     * @return News
+     */
+    public function setPublished($published=true)
+    {
+        $this->published = $published;
+
+        return $this;
+    }
+
+    /**
+     * Get published
+     *
+     * @return boolean
+     */
+    public function getPublished()
+    {
+        return $this->published;
+    }
+
+    /**
+     * Set imgbftitle
+     *
+     * @param boolean $img_b
+     *
+     * @return News
+     */
+    public function setImgbftitle($img_b=true)
+    {
+    	$this->imgbftitle = $img_b;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get imgbftitle
+     *
+     * @return boolean
+     */
+    public function getImgbftitle()
+    {
+    	return $this->imgbftitle;
+    }
+    
+    /**
+     * Set imgaftitle
+     *
+     * @param boolean $img_b
+     *
+     * @return News
+     */
+    public function setImgaftitle($img_b=false)
+    {
+    	$this->imgaftitle = $img_b;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get imgbftitle
+     *
+     * @return boolean
+     */
+    public function getImgaftitle()
+    {
+    	return $this->imgaftitle;
+    }
+    
+    /**
+     * Set imgafcont
+     *
+     * @param boolean $img_b
+     *
+     * @return News
+     */
+    public function setImgafcont($img_b=false)
+    {
+    	$this->imgafcont = $img_b;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get imgbftitle
+     *
+     * @return boolean
+     */
+    public function getImgafcont()
+    {
+    	return $this->imgafcont;
+    }
+
+    /**
+     * Set linknews
+     *
+     * @param string $st
+     *
+     * @return News
+     */
+    public function setLinknews($st)
+    {
+    	if($st !=null)
+    		$this->linknews = $st;
+    	else
+    		$this->linknews = "";
+    
+    	return $this;
+    }
+    
+    /**
+     * Get linknews
+     *
+     * @return string
+     */
+    public function getLinknews()
+    {
+    	return $this->linknews;
+    }
+    
+    /**
+     * Set image
+     *
+     * @param \DR\ImageBundle\Entity\ImageCont $image
+     *
+     * @return News
+     */
+    public function setImage(\DR\ImageBundle\Entity\ImageCont $image = null)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \DR\ImageBundle\Entity\ImageCont
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * Set printtitle
+     *
+     * @param boolean $printtitle
+     *
+     * @return News
+     */
+    public function setPrinttitle($printtitle)
+    {
+        $this->printtitle = $printtitle;
+
+        return $this;
+    }
+
+    /**
+     * Get printtitle
+     *
+     * @return boolean
+     */
+    public function getPrinttitle()
+    {
+        return $this->printtitle;
+    }
+
+    /**
+     * Set printcontent
+     *
+     * @param boolean $printcontent
+     *
+     * @return News
+     */
+    public function setPrintcontent($printcontent)
+    {
+        $this->printcontent = $printcontent;
+
+        return $this;
+    }
+
+    /**
+     * Get printcontent
+     *
+     * @return boolean
+     */
+    public function getPrintcontent()
+    {
+        return $this->printcontent;
+    }
+}

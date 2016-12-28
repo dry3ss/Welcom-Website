@@ -1,0 +1,32 @@
+{{ form_start(form) }}
+    {{ form_errors(form.news) }}
+    
+    
+    <table class="table">
+                <thead>
+                    <tr>
+                    <th class="table_backgr">Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for a_news in form.news %}
+            
+                	<tr>
+                  		<td class="table_row_fixed_size">{{ form_errors(a_news) }}
+                            {{ form_widget(a_news) }}</td>
+                  	</tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+
+<div class="row ">
+	<div class="col-sm-12 textcenter">
+		<br>
+        {{ form_widget(form.delete, {'attr': {'class': 'btn btn-warning'}}) }}
+        <br>
+	</div>
+</div>
+    {{ form_errors(form) }}
+    {{ form_rest(form) }}
+{{ form_end(form) }}

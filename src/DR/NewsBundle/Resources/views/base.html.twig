@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <title>{% block title %}Welcom'!{% endblock %}</title>
+        {% block stylesheets %}
+        	<link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+        	<link rel="stylesheet" href="{{ asset('css/over_bootstrap.css') }}" />        	
+        	<link href="https://fonts.googleapis.com/css?family=Acme|Architects+Daughter|Coiny|Kaushan+Script" rel="stylesheet">
+        
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+	
+	<body class="container-fluid backgr_style base_z_index null_pos position_relative no_pad_no_marg max_width_100">
+		<header >
+			<nav class="navbar navbar-inverse navbar-fixed-top  heavy_z_index">
+       			<div class="container-fluid">
+          			<ul class="nav navbar-nav ">
+          				<li class="textcenter"><img src={{  asset("banner_welcom.png") }} class="logo_sized_bar" id="menu_visibility_toggle"/> 
+          				<div class="color_blue" id="js_insert_text_menu"></div></li>
+          				<li class="{% if TWIG_nav_1 is defined %}active{% endif %} to_toggle"> <a class= "navbar_text heavy_z_index" href="{{ path('home') }}">Homepage</a></li>
+            			<li class="{% if TWIG_nav_2 is defined %}active{% endif %} to_toggle"> <a class= "navbar_text"  href="{{ path('campus') }}">Campus</a> </li>
+            			<li class="{% if TWIG_nav_3 is defined %}active{% endif %} to_toggle"> <a class= "navbar_text"  href="{{ path('housing') }}">Housing</a> </li>
+            			<li class="{% if TWIG_nav_4 is defined %}active{% endif %} to_toggle"> <a class= "navbar_text"  href="{{ path('lif') }}">Life in France</a> </li>
+            			<li class="{% if TWIG_nav_5 is defined %}active{% endif %} to_toggle"> <a class= "navbar_text"  href="{{ path('help') }}">Help</a> </li>
+            			<li class=" to_toggle "> <a id="color_blue"class= "navbar_text"  href="https://docs.google.com/forms/d/e/1FAIpQLSe5mYIcKgVNJLCYrefsdx_k3GVIs2dD-AfQqqBhIpqWL3qEHA/viewform">Register!</a> </li>
+            			
+            		</ul>          			
+				</div>
+      		</nav>
+   	   	    {% block header %}
+				HEADER
+            {% endblock %}
+		</header>  
+		<div class="row m_h">
+    			<div class=" col-sm-12 position_relative null_pos no_pad_no_marg light_z_index ">
+    			        {% block background %}    			        	
+    			        {% endblock %}
+    			</div>
+        </div>
+  
+    		<div class="row ">
+    			<div class=" col-sm-12 normal_z_index no_pad_no_marg">
+    				<div class="row ">
+    						<div class="col-sm-offset-1 col-sm-10 ">
+                                {{ include('DRNewsBundle::Default/_flash_messages.html.twig') }}
+           					</div>
+        			</div>
+    	            {% block body %}            
+    					
+    					<div class="row">
+    						{% if is_granted('ROLE_USER') %}
+        						<div class="col-sm-2 backgr_admin">
+                                    {% block main_sidebar %}
+                                        
+                                       		<div class="row ">
+            									<div class="col-sm-12 textcenter btn-group-vertical">
+            									Connected as: <div style="color:black;">{{ app.user.username }}</div>
+            									Roles: <div style="color:black;">{{ app.user.roles|join(', ') }}</div>
+            									User Menu: 
+            										<a class="btn btn-info" href="{{ path('tutorial') }}">Tutorial</a> 
+                                					<a class="btn btn-success" href="{{ path('upload_img') }}">Manage imgs</a>
+                                    				<a class="btn btn-warning" href="{{ path('delete_img') }}">Delete imgs</a>                                        
+                                					<a class="btn btn-success" href="{{ path('upload_news') }}">Manage news</a>                                        
+                                    				<a class="btn btn-warning" href="{{ path('delete_news') }}">Delete news</a>                                      				
+                                    				
+                                    				<a class="btn btn-primary" href="{{ path('fos_user_change_password') }}">Change password</a>                                            
+                                                </div>
+            								</div>
+            								{% if is_granted('ROLE_ADMIN') %}
+                								<div class="row ">
+                									<div class="col-sm-12 textcenter btn-group-vertical">
+                                                    	Aministration Menu: 
+                                                    		<a class="btn btn-primary" href="{{ path('fos_user_registration_register') }}">Add user</a>
+                                                	</div>
+                								</div>
+            								{% endif %}
+            								<div class="row ">            								
+            									<div class="col-sm-12 textcenter btn-group-vertical">                                      
+                                    				<br/><a class="btn btn-danger" href="{{ path('fos_user_security_logout') }}">Logout</a>
+                                                </div>
+            								</div>
+            							                              
+                                    {% endblock %}
+               					</div>
+               					<div class="col-sm-9 backgr_admin">               						
+               				{% else %}             				  
+        						<div class="col-sm-offset-2 col-sm-9 backgr_admin">
+           					{% endif %}
+           					{% block main %}{% endblock %} {#indentation is not pretty 
+           					 				but its  where it's supposed to be !#}
+               					</div>
+        				</div> 
+                    {% endblock %}
+                    {% block pre_and_footer %}
+                    {% endblock %}
+                </div>
+        	</div>    
+    	
+
+        {% block javascripts %}
+        	<script src="{{ asset('js/jquery.min.js') }}"></script>
+        	<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+        	<script src="{{ asset('js/debounce.js') }}"></script>
+        	
+            {% if CONF_hide_menu is defined and CONF_hide_menu %}   	
+        		<script src="{{ asset('js/hide_menu_small_device.js') }}"></script> 
+        		<script>
+        		    {% block pass_var_hide_menu %}
+            		    $(function() 
+            		    {   
+            		    	var toggle_menu_params=
+                		    { 
+                    				activation_bool: false,
+                    				toggle_screen_width: 768,
+                    				id_button_toggle: "#menu_visibility_toggle",
+                    				class_select_to_hide: "li.to_toggle",
+                    				id_text_show: "#js_insert_text_menu"
+                    		};   
+                		    autoToggleBoolLauncher(toggle_menu_params);
+            		    	ToggleMenuLauncher(toggle_menu_params);            		    	 						
+            		    });
+        		    {% endblock %}
+        		</script>
+            {% endif %}     	
+        	{% block stop_fix_logo %}     	
+        	{% endblock %}
+        	{% block background_and_animation %}     	
+        	{% endblock %} 
+        	{%  block stupid_table_jq_plugin %}
+        	{% endblock %}
+        	 
+        	{%  block custom_js_scripts %}
+        	{% endblock %}
+        	
+        {% endblock %}
+    </body>
+</html>

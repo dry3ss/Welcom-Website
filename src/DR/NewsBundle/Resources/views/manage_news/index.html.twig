@@ -1,0 +1,90 @@
+{% extends 'DRNewsBundle::base.html.twig' %}
+
+
+{% block main %}
+     <br> <br> <br> <br>
+    {% if formDA is defined %}
+    	<h1>ATTENTION:</h1> <h2>There will be no secondary prompt once you click a Delete button</h2>
+    	<h1>ATTENTION:</h1> <h2>If you delete the news, the image's link will be updated, but the image will live on
+    	as a standalone, if you want to easily delete a linked image go <a class="btn btn-warning" href="{{ path('delete_img') }}">here</a>
+    	 and sort by linked news then delete it</h2>
+    	
+    {% endif %}
+     
+    {% if formA is defined %}
+    	{% include 'DRNewsBundle:base_views:news_add_form_fragment.html.twig' with {'form':  formA,'img': a_news.image} only %}
+    {% endif %}
+
+    <div class="row ">
+		<div class="col-sm-8 ">
+    		            <br>All current news (click any column's name to sort):
+		</div>
+    	<div class="col-sm-8 table_no_pad_no_marg_right ">
+    		<table id="simpleTable" class="table">
+                <thead>
+                    <tr>
+                    <th data-sort="int" class="table_backgr"> ID </th>
+                    <th data-sort="string" class="table_backgr"> Title </th>
+                    <th data-sort="string" class="table_backgr"> Category </th>
+                    <th data-sort="string" class="table_backgr"> Author </th>
+                    <th data-sort="int" class="table_backgr"> Date </th>
+                    <th class="table_backgr">Modify</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for a_news in news %}
+            
+                	<tr class="table_row_fixed_size">
+                  		<td >{{ a_news.id }}</td>
+                  		<td  id="title_{{ a_news.id }}">{{ a_news.title  }}</td>
+                  		<td>{{ a_news.category }}</td>
+                  		<td>{{ a_news.author }}</td>      		
+                  		<td data-sort-value="{{a_news.date | date("U")  }}">{{ a_news.date|date("d/m/y") }}</td>
+                  		<td><a class="btn btn-primary" href="{{ path('modify_news', { 'id': a_news.id }) }}">Modify</a></td>
+                  	</tr>
+                {% endfor %}
+                </tbody>
+            </table>
+    	</div>
+    	{% if formD is defined %}
+        	<div class="col-sm-4 table_no_pad_no_marg_left">
+                {% include 'DRNewsBundle:base_views:news_delete_form_fragment.html.twig' with {'form':  formD}only %}
+        	</div>
+    	{% endif %}
+	</div>
+    	{% if formDA is defined %}
+            <div class="row">
+            	{% if is_granted('ROLE_SUPER_ADMIN') %}	
+                	<div class="col-sm-12 textcenter table_backgr"> 
+            			{% include 'DRNewsBundle:base_views:button_red_delete_form_fragment.html.twig' with {'form':  formDA}only %}
+     				</div>
+     				<div class="col-sm-12 textcenter"> 
+     					<br><br><br>
+     				</div>
+     			{% endif %}
+				<div class="col-sm-12 textcenter table_backgr"> 
+					<a class="btn btn-success" href="{{ path('upload_news') }}">Back to the management list</a>
+        		</div>
+        	</div>
+        {% else %}
+            <div class="row">	
+                <div class="col-sm-12 textcenter table_backgr"> 
+    				<a class="btn btn-warning" href="{{ path('delete_news') }}">Delete some/all news</a>
+                </div>
+            </div>
+    	{% endif %}
+
+     <br> <br> <br> <br>
+{% endblock %}
+
+
+{%  block stupid_table_jq_plugin %}
+	
+	<script src="{{ asset('js/stupidtable.min.js')}}"></script>
+	<script>
+        $(function(){
+          $("#simpleTable").stupidtable();
+        });
+    </script>
+{% endblock %}
+

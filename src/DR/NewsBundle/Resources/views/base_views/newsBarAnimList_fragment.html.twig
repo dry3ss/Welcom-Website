@@ -1,0 +1,55 @@
+
+        <div class="height_100 no_pad_no_marg">
+             <div class="position_absolute null_pos">
+             		<img src={{  asset("icon_arrow_left.png") }} id="arrow_left" class="newsbar_arrow newsbar_arrow__left position_absolute heavy_z_index"/>
+             			<img src={{  asset("icon_arrow_righ.png") }} id="arrow_right" class="newsbar_arrow newsbar_arrow__right position_absolute heavy_z_index"/>	
+                  <div class="position_relative" style="position: relative;left:0;top:27%;top:50vh;">
+                    	<div class="row newsbar_fake_border">
+                    	</div>
+                    	
+                    	{% for news in newslist %}
+                    	{% if news.published %}
+                                {% if loop.index>1 %}
+                                    {% set aff='no_display' %} 
+                                {% else %}
+                                    {%  set aff='' %} 
+                                {% endif %}
+                                	<Dn class="row position_absolute null_pos_top height_100 back_id_  {{ aff }}">
+                                		<div class="newsbar_height col-sm-12 newsbar_container_white">		
+            								<div class="row  height_100pc ">
+                                                <div class=" newsbar_text_padding col-sm-offset-7 col-sm-4 height_100pc heavy_z_index">
+                                            					<newsbar_title>
+                                            					    {% block NewsBarTitle %}{{ news.title }}{% endblock %}
+                                            					</newsbar_title>
+                                            					<newsbar_extract><br>
+                                                					{% block NewsBarExract %}
+                                                    					{{news.extract|raw }} 
+                                                					{% endblock %}
+                                            					</newsbar_extract>
+                                            					{% if news.linknews != ""%}
+                                            					<div class="textright"> <a class="readmore_link_style" href="{{ path(news.linknews) }}">Read more</a> </div>
+                                            					{% endif %}
+                                            	</div>
+                                            </div>
+                                        </div>
+                        			</Dn>
+                        	{% endif %}
+                        {% endfor %}                                	
+
+                  </div>
+             </div>
+        </div>
+        
+        
+        <script>
+        		    {% block pass_var_anim_newsbara %}        		    
+    	    			var loop_news_param=
+    	    		    { 
+    	        				length_to_change: loop_images_param.length_to_change,//number of pixels to scroll before stopping the loop
+    	        				max:loop_images_param.max,//number of images
+    	        				sel: 'Dn.back_id_',//the selector (jquery type) that can be used to get all the images' credits
+    	        				id_arrow_left: '#arrow_left',
+    	        				id_arrow_right: "#arrow_right"
+    	        		};
+        		    {% endblock %}
+        		</script>

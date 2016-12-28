@@ -1,0 +1,35 @@
+{{ form_start(form) }}
+<div class="row textleft">
+	<div class="col-sm-4">
+    	{{ form_row(form.credit) }}
+    </div>
+    <div class="col-sm-4 textleft">
+    	{{ form_row(form.category) }}
+    </div>
+</div>
+<div class="row textleft">
+    <div class="col-sm-4 textleft">
+    	{{ form_row(form.image) }}
+    </div>
+    <div class="col-sm-4 textleft">
+    {% if img is defined %}
+        {% if img.imagename != null %}
+    		<br>The current image :<br>    		
+        	<div class="">
+    			<img src={{  asset(""~img.imagename) }} class="height_20" />
+            </div>
+        	<br>
+        {% endif %}
+    {% endif %}
+
+    </div>
+</div>
+<div class="row textleft">
+    <div class="col-sm-4">
+    	{{ form_row(form.save, {'attr': {'class': 'btn btn-success'}}) }}
+    </div>
+</div>
+    {{ form_errors(form) }}
+    {{ form_rest(form) }}
+
+{{ form_end(form) }}

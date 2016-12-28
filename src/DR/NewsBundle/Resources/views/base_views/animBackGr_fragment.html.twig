@@ -1,0 +1,55 @@
+<div class="position_fixed null_pos light_z_index">
+		{% set i=0 %}   	
+    	{% for news in newslist %}
+    		{% if loop.index>1 %}
+    			{% set aff='no_display' %} 
+    		{% else %}
+    			{% set aff='' %} 
+    		{% endif %}
+    		{% if news.published %}    		
+        		{% if news.image !=null %}   	    
+        			<img src={{  asset(""~news.image.imagename) }} class="max_h_w position_absolute light_z_index back_id_ {{ aff }}"/>    	
+        	    {% else %}
+        	    	<img src="" class="max_h_w position_absolute light_z_index back_id_ {{ aff }}"/>    	
+        		{% endif %}        		
+    		{% set i=i+1 %}
+    		{% endif %}
+    	{% endfor %}
+</div>   	
+    	{% for news in newslist %}
+    		{% if loop.index>1 %}
+    			{% set aff='no_display' %} 
+    		{% else %}
+    			{% set aff='' %} 
+    		{% endif %}
+    		{% if news.published %}    		
+        		{% if news.image.credit !="" %}
+        		<style_credit class="normal_z_index main_content_backgr img_credit_id_ {{ aff }} newsbar_img_credit_position">
+                    	Credit: {{ news.image.credit }}
+                </style_credit> 	       	
+        	    {% else %}
+        	    <style_credit class="normal_z_index main_content_backgr img_credit_id_ {{ aff }} newsbar_img_credit_position">
+                </style_credit>   	 	
+        		{% endif %}        		
+    		{% endif %}
+    	{% endfor %}
+    	<script>    		
+    	    {% block pass_var_animated_backgr %}
+        	    var loop_images_param=
+    		    { 
+        				length_to_change: 700,//number of pixels to scroll before stopping the loop
+        				max:{{i}},//number of images
+        				sel: 'img.back_id_',//the selector (jquery type) that can be used to get all the images
+        				id_arrow_left: '#arrow_left',
+        				id_arrow_right: "#arrow_right"
+        		};
+        	    var loop_credit_param=
+    		    { 
+        				length_to_change: loop_images_param.length_to_change,//number of pixels to scroll before stopping the loop
+        				max:loop_images_param.max,//number of images
+        				sel: 'style_credit.img_credit_id_',//the selector (jquery type) that can be used to get all the images' credits
+        				id_arrow_left: '#arrow_left',
+        				id_arrow_right: "#arrow_right"
+        		};
+    	    {% endblock %}
+    	</script> 
