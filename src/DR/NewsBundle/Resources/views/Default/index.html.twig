@@ -1,0 +1,12 @@
+{% extends 'DRNewsBundle::base.html.twig' %}
+
+{% block main %}
+lala
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+    {% for img in images %}
+    	<img src={{  asset(""~img.image) }} />
+    	<br>
+    {% endfor %}
+{% endblock %}

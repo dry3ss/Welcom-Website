@@ -1,0 +1,15 @@
+{% extends 'DRNewsBundle::base.html.twig' %}
+
+{% block main %}
+
+	{% if formM is defined %}
+	    {% include 'DRNewsBundle:base_views:news_add_form_fragment.html.twig' with {'form':  formM, 'img': a_news.image}only %}
+    {% endif %}
+ 	<div class="row">	
+		<div class="col-sm-12 textcenter table_backgr">
+			<a class="btn btn-success" href="{{ path('upload_news') }}">Back to the management list</a>
+			<a class="btn btn-warning" href="{{ path('delete_news') }}">Delete some/all news</a>
+		</div>
+	</div>
+	 <br><br><br>
+{% endblock %}

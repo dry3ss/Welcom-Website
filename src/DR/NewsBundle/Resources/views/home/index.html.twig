@@ -1,0 +1,90 @@
+{% extends 'DRNewsBundle::true_base.html.twig' %}
+
+{#1#}        {% set CONF_static_bckg=false %}
+{#2#}        {% set CONF_static_newsbar=false %}
+{#3#}        {% set CONF_anim_newsbar_and_backg=true %}
+{#4#}        {% set CONF_logo_scrollfix=true %}
+{#5#}        {% set CONF_newslist=true %}        
+{#6#}        {% set CONF_hide_menu=true %} 
+  
+{#
+{% block footer %}
+{{ dump(news) }}
+{% endblock %}
+#}
+
+    
+        {# Depending on what you choose before, you may have to set : 
+        {# for 1	{% set TWIG_static_bckg_img=news.0.image %}
+        {# for 2	{% set TWIG_newsbar_a_news=news.0 %}
+        {# for 3	{% set TWIG_anim_bckg_newsbar_list=news %} (remember the images are gathered FROM the news 
+        													displayed in the animated newsbar)
+        {# for 5	{% set TWIG_newslist_main=news %} (if you have a news container (whether it has 1 or more news inside)
+        	OR
+         			{% set TWIG_a_news=news.0 %}  (if you only want to display one not inside a container)			
+
+		(nothing for 4 & 6)
+        
+        #}
+        {% set TWIG_anim_bckg_newsbar_list=newsbar %} 
+        {% set TWIG_newslist_main=news %}
+        
+        {% set TWIG_nav_1 =true%} 
+        
+        {# 
+        	Optionnal override set :
+        	#Related to the animated background :
+            	{% set TWIG_pass_JS_sel_i ='img.back_id_'%} // for the image selector of 
+            												the animated background
+            	{% set TWIG_pass_JS_length_stop_anim_backgr =700 %} // for the scroll 
+            												distrance after which
+            												the animated background stops 
+            												moving 
+        	#Related to the scroll&fix logo:
+        		{% set TWIG_pass_JS_id_logo_SF ='#logo_scroll_fix'%} // for the image selector of 
+            												the logo that can scroll then is fixed
+        		{% set TWIG_pass_JS_length_SF =700%} // scroll distance after which
+            												it fixes it
+        		{% set TWIG_pass_JS_class_SF ='logo_centred_vert_fix'%} // the class that gets applied 
+            												after the scroll distance is reached 
+            												(this is what actually fixes it)
+            
+            				       	
+        												       	
+        	
+        	
+        #}
+        
+       {#
+       
+        {% set custom_TWIG_n1 =news.0%}
+        {% set custom_TWIG_TRI_1_n_1 =news.1%}
+        {% set custom_TWIG_TRI_1_n_2 =news.2%}
+        {% set custom_TWIG_TRI_1_n_3 =news.3%}
+        
+        {% set custom_TWIG_n2 =news.4%}
+        {% set custom_TWIG_TRI_2_n_1 =news.5%}
+        {% set custom_TWIG_TRI_2_n_2 =news.6%}
+        {% set custom_TWIG_TRI_2_n_3 =news.7%}
+        {% set custom_TWIG_TRI_3_n_1 =news.8%}
+        {% set custom_TWIG_TRI_3_n_2 =news.9%}
+        {% set custom_TWIG_TRI_3_n_3 =news.10%}
+        {% set custom_TWIG_TRI_4_n_1 =news.11%}
+        {% set custom_TWIG_TRI_4_n_2 =news.12%}
+        {% set custom_TWIG_TRI_4_n_3 =news.13%}
+         
+        {% block News %}
+        	{% include "DRNewsBundle:base_views:news_fragment.html.twig" with  {'a_news':  custom_TWIG_n1} only %}	    
+        	{% include "DRNewsBundle:base_views:news_TRI_fragment.html.twig" with  {'a_news1':  custom_TWIG_TRI_1_n_1,'a_news2':  custom_TWIG_TRI_1_n_2,'a_news3':  custom_TWIG_TRI_1_n_3} only %}	    
+    		
+        	{% include "DRNewsBundle:base_views:news_fragment.html.twig" with  {'a_news':  custom_TWIG_n2} only %}	    
+        	{% include "DRNewsBundle:base_views:news_TRI_fragment.html.twig" with  {'a_news1':  custom_TWIG_TRI_2_n_1,'a_news2':  custom_TWIG_TRI_2_n_2,'a_news3':  custom_TWIG_TRI_2_n_3} only %}
+        	{% include "DRNewsBundle:base_views:news_TRI_fragment.html.twig" with  {'a_news1':  custom_TWIG_TRI_3_n_1,'a_news2':  custom_TWIG_TRI_3_n_2,'a_news3':  custom_TWIG_TRI_3_n_3} only %}
+        	{% include "DRNewsBundle:base_views:news_TRI_fragment.html.twig" with  {'a_news1':  custom_TWIG_TRI_4_n_1,'a_news2':  custom_TWIG_TRI_4_n_2,'a_news3':  custom_TWIG_TRI_4_n_3} only %}  
+        {% endblock %}
+
+        #}
+       
+        
+
+		 

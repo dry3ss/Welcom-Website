@@ -1,0 +1,97 @@
+{% extends 'DRNewsBundle::base.html.twig' %}
+
+{% block main %}
+
+<br> <br> <br> <br>
+    {% if formDA is defined %}
+    	<h1>ATTENTION:</h1> <h2>There will be no secondary prompt once you click a Delete button</h2>
+    {% endif %}
+     
+    {% if formA is defined %}
+        {% include 'DRNewsBundle:base_views:img_add_form_fragment.html.twig' with {'form':  formA} only%}
+    {% endif %}
+
+     <div class="row ">
+		<div class="col-sm-8 ">
+    		<br>All current Images (click any column's name to sort):
+		</div>
+	    {% if formDA is defined %}
+    	<div class="col-sm-10 table_no_pad_no_marg_right ">
+    	{% else %}
+    	<div class="col-sm-12  ">
+    	{% endif %}
+    		<table id="simpleTable" class="table">
+                <thead>
+                    <tr>
+                    <th data-sort="int" class="table_backgr"> ID </th>
+                    <th data-sort="int" class="table_backgr"> Date </th>
+                    <th class="table_backgr"> Image </th>
+                    <th data-sort="string" class="table_backgr"> Category </th>
+                    <th data-sort="string" class="table_backgr"> Credit </th>
+                    <th data-sort="int" class="table_backgr"> News linked </th>
+                    <th class="table_backgr">Modify</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for img in images %}
+            
+                	<tr class="">
+                  		<td >{{ img.id }}</td>
+                  		<td data-sort-value="{{img.updated | date("U")  }}">{{ img.updated|date("d/m/y") }}</td>  
+                  		<td class="height_20 width_175px"><img src={{  asset(""~img.imagename) }} class="max_width_100pc" /></td>
+                  		<td >{{ img.category }}</td>
+                  		<td >{{ img.credit }}</td>
+                  		{% if img.news != null %}
+                  			<td data-sort-value={{ img.news.id }}><a class="btn btn-primary" href="{{ path('modify_news', { 'id': img.news.id }) }}">{{ img.news.id }}</a></td>
+                  		{% else %}
+                  			<td data-sort-value="0"><a class="btn btn-primary" href="#" disabled>No</a></td>
+                  		{% endif %}
+                  		<td><a class="btn btn-primary" href="{{ path('modify_img', { 'id': img.id }) }}">Modify</a></td>
+                  	</tr>
+                {% endfor %}
+                </tbody>
+            </table>
+    	</div>
+    	{% if formD is defined %}
+    	<div class="col-sm-2 table_no_pad_no_marg_left">    	
+                 {% include 'DRNewsBundle:base_views:img_delete_form_fragment.html.twig' with {'form':  formD, 'images': images}only %} 
+    	</div>
+    	{% endif %}
+    	
+    	{% if formDA is defined %}
+			<div class="row">
+                {% if is_granted('ROLE_SUPER_ADMIN') %}		
+                	<div class="col-sm-12 textcenter table_backgr"> 
+            			{% include 'DRNewsBundle:base_views:button_red_delete_form_fragment.html.twig' with {'form':  formDA}only %}
+    				</div>
+    				<div class="col-sm-12 textcenter"> 
+         					<br><br><br>
+         			</div>
+    			{% endif %}               	
+                <div class="col-sm-12 textcenter table_backgr"> 
+    				<a class="btn btn-success" href="{{ path('upload_img') }}">Back to the management list</a>
+                </div>
+			</div>
+        {% else %}
+            <div class="row">	
+                <div class="col-sm-12 textcenter table_backgr"> 
+    				<a class="btn btn-warning" href="{{ path('delete_img') }}">Delete some/all images</a>
+                </div>
+            </div>
+    	{% endif %}
+
+     <br> <br> <br> <br>
+{% endblock %}
+
+
+{%  block stupid_table_jq_plugin %}
+	
+	<script src="{{ asset('js/stupidtable.min.js')}}"></script>
+	<script>
+        $(function(){
+          $("#simpleTable").stupidtable();
+        });
+    </script>
+{% endblock %}
+
+

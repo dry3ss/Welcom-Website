@@ -1,0 +1,96 @@
+{{ form_start(form) }}
+<div class="row textcenter">
+        	<div class="col-sm-3">
+            	{{ form_row(form.title) }}
+            </div>
+            <div class="col-sm-5 textleft">
+            	{{ form_row(form.date) }}
+            </div>
+            <div class="col-sm-4 textleft">
+            	<div class="row textcenter">
+            		<div class="col-sm-6 textleft">
+            		Print the title ?
+            	   	    {{ form_row(form.printtitle) }}
+            	    </div>
+            	    <div class="col-sm-6 textleft">
+            	    Print the content ?
+            	   	    {{ form_row(form.printcontent) }}
+            	    </div>
+            	</div>
+            </div>
+            
+</div>
+<div class="row textcenter">
+	<div class="col-sm-12">
+        <h4>If this news is supposed to appear in an animated newsbar set its category to 
+        'main_' followed by the name of the category then set linknews to the internal
+         route name for the "Read more" link 
+         <br> example: <br> category: 'main_accomodation', linknews: 'accom' </h4>
+         <br>_
+        <div class="row">
+        	<div class="col-sm-4">
+            	{{ form_row(form.category) }}
+            </div>
+            <div class="col-sm-4">
+            	{{ form_row(form.author) }}
+            </div>
+            <div class="col-sm-4">
+            	{{ form_row(form.linknews) }}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row textcenter">
+    <div class="col-sm-4">
+    Do you want this news to be published <br>(visible to visitors)?
+        {{ form_row(form.published) }}
+    </div>
+    <div class="col-sm-8">
+    	If there is an img attached, do you want it to be:<br>_
+        <div class="row">        	
+    		<div class="col-sm-4">
+    		Before the title
+                {{ form_row(form.imgbftitle) }}
+            </div>
+			<div class="col-sm-3">
+			Between the two
+                {{ form_row(form.imgaftitle) }}
+			</div>
+			<div class="col-sm-3">
+			After the content
+                {{ form_row(form.imgafcont) }}
+			</div>
+        </div>
+    </div>
+</div>
+<div class="row textleft">
+    <div class="col-sm-12">
+        {{ form_row(form.content) }}
+    </div>
+    <div class="col-sm-offset-2 col-sm-10">
+    	<h4>Optional image:</h4>
+    	{% if img.imagename != null %}
+    		<br>The current image associated with the news:<br>
+    		
+        	<div class="">
+    			<img src={{  asset(""~img.imagename) }} class="height_20" />
+            </div>
+        	<br>
+        {% else %}
+        	<br>The current news has no image associted with it<br>
+        {% endif %}
+    	{% for img_row in form.image %}
+    	    {% if img_row != form.image.save %}
+    		    {{ form_row(img_row) }}
+    		{% endif %}
+    	{% endfor %}
+    </div>
+</div>
+<div class="row "row textleft"">
+    <div class="col-sm-12">
+        {{ form_row(form.image.save, {'attr': {'class': 'btn btn-success'}}) }}
+    </div>
+</div>
+    {{ form_errors(form) }}
+    {{ form_rest(form) }}
+{{ form_end(form) }}

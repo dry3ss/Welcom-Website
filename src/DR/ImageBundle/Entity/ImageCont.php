@@ -1,0 +1,451 @@
+<?php
+
+namespace DR\ImageBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use DR\NewsBundle\Entity\News;
+
+/**
+ * ImageCont
+ *
+
+ * @ORM\Table(name="image_cont")
+ * @ORM\Entity(repositoryClass="DR\ImageBundle\Repository\ImageContRepository")
+ * @ORM\HasLifecycleCallbacks()
+ */
+class ImageCont
+{
+	const SERVER_PATH_TO_IMAGE_FOLDER = 'image_db/';
+	
+	// Needed for removal/modification
+	private $tempImagename=null;
+	// Needed for removal/modification flagging (we never temper with default images, only copy them at best
+	private $defaultImage=false;
+	//not sync with db but actually contains the image during the uploading process
+	/**
+	* 
+	* @Assert\Image(maxSize= "500M",
+	* 	maxSizeMessage = "The file is too large ({{ size }}). Allowed maximum size is {{ limit }}")	     
+    */
+	private $image=null;
+	
+	/**
+	 * @Assert\Type("bool")
+	 */
+	protected $to_be_deleted;
+	
+	
+	
+	/**
+	 * @ORM\OneToOne(targetEntity="DR\NewsBundle\Entity\News", 
+	 cascade={"persist"} , mappedBy="image")
+	 */
+	protected $news;
+	
+	/**
+	 * Set to_be_deleted
+	 *
+	 * @return ImageCont
+	 */
+	public function setToBeDeleted($bol)
+	{
+		$this->to_be_deleted = $bol;
+	
+		return $this;
+	}
+	
+	/**
+	 * Get to_be_deleted
+	 *
+	 * @return bool
+	 */
+	public function getToBeDeleted()
+	{
+		return $this->to_be_deleted;
+	}
+	
+	protected function getWebRootDir()
+	{
+		return __DIR__.'/../../../../web/';
+	}
+	//ATTENTION: you then have to append the category !!
+	public function getUploadRootDir()
+	{
+		// the absolute directory path where uploaded
+		// documents should be saved
+		return $this->getWebRootDir() . $this->getUploadDir();
+	}
+	
+	//ATTENTION: you then have to append the category !!
+	protected function getUploadDir()
+	{
+		// get rid of the __DIR__ so it doesn't screw up
+		// when displaying uploaded doc/image in the view.
+		return self::SERVER_PATH_TO_IMAGE_FOLDER;
+	}
+	
+	/**
+	 * Set imagename
+	 *
+	 * @param UploadedFile $image
+	 *
+	 * @return ImageCont
+	 */
+	public function setImage(UploadedFile $image)
+	{
+		//If we are modifying an img instead of adding one
+		if ( null !== $this->getImageName())
+		{
+			$this->tempImagename=$this->getImageName();
+		}
+		$this->image = $image;
+		$this->setImagename(null);	
+		return $this;
+	}
+	
+	/**
+	 * Get image
+	 *
+	 * @return UploadedFile
+	 */
+	public function getImage()
+	{
+		return $this->image;
+	}
+	
+	protected function getStringExtension($str)
+	{
+		$rev=strrev($str);
+		$pos=strpos($str,'.');
+		//if don't found the '.' or there is no extensionafter it
+		if( ($pos ===false) || ($pos >= strlen($str) )) 
+		// ATTENTION do NOT use just ==		
+		{
+			return "";
+		}
+		else 
+		{
+			return substr($str,$pos+1);
+		}
+		
+	}
+
+	
+	/**
+	 * @ORM\PrePersist()
+	 * @ORM\PreUpdate()
+	 */
+	public function preUpload()	
+	{
+		$file = $this->getImage();
+		if (null === $file)
+		{
+			//if we modified the category but not the image
+			if ( $this->tempImagename !== null)
+			{
+				$this->setImagename($this->getUploadDir() . $this->category
+						. '/' .md5(uniqid()) . '.' . $this->getStringExtension($this->tempImagename));
+			}
+			return;
+		}
+		
+		
+		// Generate a unique name for the file before saving it
+		$this->setImagename($this->getUploadDir() . $this->category 
+			. '/' .md5(uniqid()).'.'.$file->guessExtension());		
+	}
+	
+	/**
+	 * @ORM\PostPersist()
+	 * @ORM\PostUpdate()
+	 */
+	public function upload()
+	{
+		// $file stores the uploaded img
+		$file = $this->getImage();
+		//$dir contains the new path to the image
+		$dir= $this->getUploadRootDir() . $this->getCategory();
+		//if we didn't change the image
+		if (null === $file) 		{
+			//still have to check if we didn't change the category (saved in $tempImagename)
+			if (null !== $this->tempImagename)
+			{
+				
+				// if we did
+				$oldfile=$this->getWebRootDir() . $this->tempImagename;
+				//we have to copy our image to the new location if it's flag as default
+				if($this->defaultImage)
+				{
+					if (file_exists($oldfile))
+					{
+						$dir=$this->getUploadRootDir() . $this->getCategory();
+						if (!(file_exists($dir) || is_dir($dir)))
+						{
+							mkdir($dir);
+						}
+						copy($oldfile,
+								$this->getWebRootDir() .$this->getImagename());
+					}
+				}
+				// or at least move our previous file if it's not a default category
+				else 
+				{
+					if (file_exists($oldfile)) 
+					{
+						$dir=$this->getUploadRootDir() . $this->getCategory();
+						if (!(file_exists($dir) || is_dir($dir))) 
+						{
+							mkdir($dir);
+						}
+						rename($oldfile,
+								$this->getWebRootDir() .$this->getImagename());
+					}
+				}
+			}
+			return;
+		}
+		
+		//if we changed the image
+		if (null !== $this->tempImagename)
+		{
+			//then we have to delete the old one IF it's not a standard
+			$oldfile=$this->getWebRootDir() . $this->tempImagename;
+			if (file_exists($oldfile) && !$this->tempImagename)
+			{
+				unlink($oldfile);				
+			}
+		}
+		// Move the file to the directory where images are stored
+		$file->move($dir,
+				$this->getImagename());
+		
+	}
+	
+	/**
+	 * @ORM\PreRemove()
+	 */
+	public function preDelete()
+	{
+		if($this->getCategory()=="default")
+		{
+			$this->defaultImage=true;
+		}
+		$this->tempImagename=$this->getImagename();
+	}
+	
+	/**
+	 * @ORM\PostRemove()
+	 */
+	public function postDelete()
+	{
+		// we don't have access to getImagename hopefully we saved it earlier
+		$oldfile=$this->getWebRootDir() . $this->tempImagename;		
+		if (file_exists($oldfile) && !$this->defaultImage) //We ONLY delete IF it's not a defautl image
+		{
+			unlink($oldfile);
+		}
+	}
+
+	
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="credit", type="string", length=255)
+     */
+    private $credit;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="imagename", type="string", length=255)
+
+     */
+    private $imagename;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="updated", type="datetime", nullable=true)
+     */
+    private $updated;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="Category", type="string", length=255)
+     */
+    private $category;
+    
+    
+    
+    
+    public function __construct()
+    {
+    	$this->credit = "Association Declic";
+    	$this->updated = new \DateTime();
+    	$this->category = "NoCategory";
+    	$this->image=null;
+    	$this->imagename=null;
+    	$this->to_be_deleted=null;
+    	$this->news=null;
+    	$this->defaultImage=false;
+    }
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set credit
+     *
+     * @param string $credit
+     *
+     * @return ImageCont
+     */
+    public function setCredit($credit)
+    {
+        $this->credit = $credit;
+
+        return $this;
+    }
+
+    /**
+     * Get credit
+     *
+     * @return string
+     */
+    public function getCredit()
+    {
+        return $this->credit;
+    }
+
+    /**
+     * Set imagename
+     *
+     * @param string $image
+     *
+     * @return ImageCont
+     */
+    public function setImagename($image)
+    {
+
+        $this->imagename = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get imagename
+     *
+     * @return string
+     */
+    public function getImagename()
+    {
+        return $this->imagename;
+    }
+
+    /**
+     * Set updated
+     *
+     * @param \DateTime $updated
+     *
+     * @return ImageCont
+     */
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
+
+        return $this;
+    }
+
+    /**
+     * Get updated
+     *
+     * @return \DateTime
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
+
+    /**
+     * Set category
+     *
+     * @param string $category
+     *
+     * @return ImageCont
+     */
+    public function setCategory($category)
+    {
+    	//if we are modifying the category we back it up using $tempImagename
+    	//so that we can move the image to the new location
+    	// ($tempImagename contains the whole path so the category is inside)
+    	
+    	if($this->category!=null && $this->category =="default")//we flag the image so that the source file will not be altered
+    	{
+    		$this->defaultImage=true;
+    	}
+    	if ( (null !== $this->getCategory()) 
+    			&& ($this->getCategory() !== $category)
+    			&& (null == $this->tempImagename))//if the $tempImagename
+    			//has already been saved, we don't want to erase it
+    	{
+    		$this->tempImagename=$this->getImageName();
+    	}    	
+    	
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return string
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * Set news
+     *
+     * @param \DR\NewsBundle\Entity\News $news
+     *
+     * @return ImageCont
+     */
+    public function setNews(\DR\NewsBundle\Entity\News $news = null)
+    {
+        $this->news = $news;
+
+        return $this;
+    }
+
+    /**
+     * Get news
+     *
+     * @return \DR\NewsBundle\Entity\News
+     */
+    public function getNews()
+    {
+        return $this->news;
+    }
+}

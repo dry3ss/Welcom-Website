@@ -1,0 +1,53 @@
+{% extends 'DRNewsBundle::true_base.html.twig' %}
+
+			{% set TWIG_nav_5 =true%} 
+
+{#1#}        {% set CONF_static_bckg=true %}
+{#2#}        {% set CONF_static_newsbar=true %}
+{#3#}        {% set CONF_anim_newsbar_and_backg=false %}
+{#4#}        {% set CONF_logo_scrollfix=true %}
+{#5#}        {% set CONF_newslist=true %}        
+{#6#}        {% set CONF_hide_menu=true %}   
+    
+        {# Depending on what you choose before, you may have to set : 
+        {# for 1	{% set TWIG_static_bckg_img=news.0.image %}
+        {# for 2	{% set TWIG_newsbar_a_news=news.0 %}
+        {# for 3	{% set TWIG_anim_bckg_newsbar_list=news %} (remember the images are gathered FROM the news 
+        													displayed in the animated newsbar)
+        {# for 5	{% set TWIG_newslist_main=news %} (if you have a news container (whether it has 1 or more news inside)
+        	OR
+         			{% set TWIG_a_news=news.0 %}  (if you only want to display one not inside a container)			
+
+		(nothing for 4 & 6)
+        
+        #}
+        {% set TWIG_newsbar_a_news=newsbar %} 
+        {% set TWIG_static_bckg_img=newsbar.image %}
+        {% set TWIG_newslist_main=news %}
+        {# 
+        	Optionnal override set :
+        	#Related to the animated background :
+            	{% set TWIG_pass_JS_sel_i ='img.back_id_'%} // for the image selector of 
+            												the animated background
+            	{% set TWIG_pass_JS_length_stop_anim_backgr =700 %} // for the scroll 
+            												distrance after which
+            												the animated background stops 
+            												moving 
+        	#Related to the scroll&fix logo:
+        		{% set TWIG_pass_JS_id_logo_SF ='#logo_scroll_fix'%} // for the image selector of 
+            												the logo that can scroll then is fixed
+        		{% set TWIG_pass_JS_length_SF =700%} // scroll distance after which
+            												it fixes it
+        		{% set TWIG_pass_JS_class_SF ='logo_centred_vert_fix'%} // the class that gets applied 
+            												after the scroll distance is reached 
+            												(this is what actually fixes it)
+            
+            				       	
+        												       	
+        	
+        	
+        #}
+
+
+
+

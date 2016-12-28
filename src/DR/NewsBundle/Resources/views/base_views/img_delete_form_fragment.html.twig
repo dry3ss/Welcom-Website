@@ -1,0 +1,33 @@
+{{ form_start(form) }}
+    {{ form_errors(form.imgs) }}    
+    <table class="table">
+                <thead>
+                    <tr>
+                    <th class="table_backgr">Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for key,img in form.imgs %}            
+                	<tr>
+                  		<td class="height_20">
+                  		{{ form_errors(img) }}
+                  		{% if form.vars.value.imgs[key].category != "default"  %}
+							{{ form_widget(img) }}
+						{% else %}
+							Cannot delete (category="default")
+						{% endif %}
+                            </td>
+                  	</tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+
+<div class="row ">
+	<div class="col-sm-12 textcenter">
+        {{ form_row(form.delete,{'attr': {'class': 'btn btn-warning'}}) }}
+	</div>
+</div>
+    {{ form_errors(form) }}
+     <div class="no_display">{{ form_rest(form) }} </div>
+{{ form_end(form) }}

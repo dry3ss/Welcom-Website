@@ -1,0 +1,66 @@
+{% if a_news.published %}
+	{% if a_news.imgbftitle and a_news.image !=null %}
+        {% block NewsImageTopContainer %}
+       		<div class="row backgr_style ">
+            	<div class="col-sm-12 no_pad_no_marg main_content_backgr">
+		            {%  include 'DRNewsBundle:base_views:news_image_fragment.html.twig' with {'image':  a_news.image} only %}
+             	</div>
+            </div>       
+		{% endblock %}
+    {% endif %}
+    {%  if a_news.printtitle %}
+    	{% block NewsTitleContainer %}
+            <div class="row ">
+            	<div class="col-sm-12  news_title_back_color ">
+            		<div class="row ">			
+            			<div class="col-sm-offset-2 col-sm-8 textcenter padding_title">
+            				<style_title class="textcenter">
+            				    {% block NewsTitle %} {{ a_news.title }}{% endblock %} 
+            				</style_title>            				
+            				<div class="textright no_pad_no_marg">            				
+            					<style_news_published >
+            						Published the {{ a_news.date|date("d/m/Y") }} by <style_news_author>{{ a_news.author }}</style_news_author>
+            					</style_news_published>            				
+            				</div>
+            			</div>
+            		</div>
+            	</div>
+            </div>
+        {% endblock %}
+    {%  endif %}
+        {% block NewsContentContainer %} 
+            <div class="row backgr_style">
+                {% if a_news.imgaftitle and a_news.image !=null %}
+                    {% block NewsImageMiddelContainer %}
+                        	<div class="col-sm-12 no_pad_no_marg main_content_backgr">
+            		            {%  include 'DRNewsBundle:base_views:news_image_fragment.html.twig' with {'image':  a_news.image} only %}
+                         	</div>   
+            		{% endblock %}
+            	{% endif %}
+            	{%  if a_news.printcontent and a_news.content != ""%}
+            		<div class="page_top_height col-sm-12 "></div>
+            		<div class="col-sm-offset-1 col-sm-10 height_100pc ">
+            			<div class="row height_100pc">
+            				<div class="col-sm-12 main_padding_content main_content_backgr">
+            					<style_content> 
+            					    {% block NewsContent %}
+            					    	{{ a_news.content|raw }}
+            					    {% endblock %}                    
+            					</style_content>
+            				</div>
+            			</div>		
+            		</div>
+            		<div class="page_top_height col-sm-12 "></div>
+            	{% endif %}
+            	{% if a_news.imgafcont and a_news.image !=null %}
+                    {% block NewsImageBottomContainer %}
+                        	<div class="col-sm-12 no_pad_no_marg main_content_backgr">
+            		            {%  include 'DRNewsBundle:base_views:news_image_fragment.html.twig' with {'image':  a_news.image} only %}
+                         	</div>   
+            		{% endblock %}
+            	{% endif %}
+            		
+            </div>
+        {% endblock %}
+            
+{% endif %}
