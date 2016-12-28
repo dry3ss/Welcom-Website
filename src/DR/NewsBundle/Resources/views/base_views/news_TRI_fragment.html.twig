@@ -31,7 +31,7 @@
                 {% if (a_news.imgbftitle or a_news.imgaftitle or a_news.imgafcont ) and a_news.image !=null %}
                    		<div class="row ">
                         	<div class="col-sm-12 no_pad_no_marg ">
-            		            {%  include 'DRNewsBundle:base_views:news_image_fragment.html.twig' with {'image':  a_news1.image} only %}
+            		            {%  include 'DRNewsBundle:base_views:news_image_fragment.html.twig' with {'image':  a_news.image} only %}
                          	</div>
                         </div>       
                 {% endif %}
