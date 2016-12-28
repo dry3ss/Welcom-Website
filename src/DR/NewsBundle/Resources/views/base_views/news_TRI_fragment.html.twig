@@ -2,7 +2,9 @@
 {# ------------------------------------------  TITLE --------------------- --------------------- #}
 <div class="row">
     <div class="row_same_height">
+    {% set i=0 %}
     {% for a_news in tri_news_array %}
+    {% set i=i+1 %}
         {% if a_news.title is defined and a_news.printtitle %}
         	<div class="col-sm-4 col_same_height col_middle  news_title_back_color">
         		<div class="">
@@ -42,9 +44,10 @@
 
 {# ------------------------------------------  CONTENT --------------------- --------------------- #}
 <div class="row backgr_style">
+{% set div=12/i %}
 	{% for a_news in tri_news_array %}
 		{% if a_news.content is defined and a_news.printcontent%}
-            <div class="col-sm-4 ">
+            <div class="col-sm-{{ div }} ">
             	<div class="row">
                 	<div class="page_top_half_height col-sm-12 "></div>
                     <div class="col-sm-offset-1 col-sm-10 height_100pc ">

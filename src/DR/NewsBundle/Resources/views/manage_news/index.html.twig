@@ -25,7 +25,9 @@
                     <tr>
                     <th data-sort="int" class="table_backgr"> ID </th>
                     <th data-sort="string" class="table_backgr"> Title </th>
-                    <th data-sort="string" class="table_backgr"> Category </th>
+                    <th data-sort="string" class="table_backgr"> Category </th>                    
+                    <th data-sort="int" class="table_backgr"> Order </th>
+                    <th data-sort="string" class="table_backgr"> Tri-news </th>
                     <th data-sort="string" class="table_backgr"> Author </th>
                     <th data-sort="int" class="table_backgr"> Date </th>
                     <th class="table_backgr">Modify</th>
@@ -38,6 +40,8 @@
                   		<td >{{ a_news.id }}</td>
                   		<td  id="title_{{ a_news.id }}">{{ a_news.title  }}</td>
                   		<td>{{ a_news.category }}</td>
+                  		<td>{{ a_news.ordernumber }}</td>
+                  		<td> {% if  a_news.partoftrinews%}Yes{% else %}No{% endif %}</td>
                   		<td>{{ a_news.author }}</td>      		
                   		<td data-sort-value="{{a_news.date | date("U")  }}">{{ a_news.date|date("d/m/y") }}</td>
                   		<td><a class="btn btn-primary" href="{{ path('modify_news', { 'id': a_news.id }) }}">Modify</a></td>

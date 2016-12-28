@@ -13,6 +13,7 @@ use Doctrine\ORM\Mapping\Id;
 use DR\ImageBundle\Entity\ImageCont;
 use DR\NewsBundle\Entity\News;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Validator\Constraints\Length;
 
 
 
@@ -41,22 +42,45 @@ class DefaultController extends Controller
 				$res_container=array();//the returned array
 				$key="";//the key used for each news in whichever array
 				$tri_container=array();//the array (passed by copy) holding each 
+				$ordernumber;
+				$old_ordernumber;
 				foreach($raw_list_news as $a_news)
 				{
+					
+					$ordernumber=$a_news->getOrderNumber();
+					if($global_order==0)//if we are at the start we still have to initialise it
+						$old_ordernumber=$ordernumber;
+					
 					$isTriNews=$a_news->$getter();// check if it's a part of a "tri news" 
 					if(!$isTriNews )//if not we do very little
 					{
+						if(count($tri_container)>0)//if we had a not-empty tri_container we have to
+						//push it in the res
+						{
+							$key="t" . $global_order;
+							$res_container[$key]=$tri_container;
+						}
+						$tri_container=array();//flush our container, note that arrays are
+						//assigned by copy in PHP not reference, so no pb here
 						$number_in_tri=0;
 						$global_order++;
+						
 					}
 					else
 					{
-						if( $number_in_tri>=3 ||$number_in_tri==0 )//if we are at the start of a new tri-news
+						if( $number_in_tri>=3 ||$number_in_tri==0 || $ordernumber !=$old_ordernumber)//if we are at the start of a new tri-news
 						{
+							if(count($tri_container)>0)
+							//if we had a not-empty tri_container we have to
+							//push it in the res
+							{
+								$key="t" . $global_order;
+								$res_container[$key]=$tri_container;
+							}
+							$tri_container=array();//flush our container, note that arrays are
+							//assigned by copy in PHP not reference, so no pb here
 							$number_in_tri=1;
 							$global_order++;
-							$tri_container=array();//flush our container, note that arrays are
-											//assigned by copy in PHP not reference, so no pb here
 						}
 						else
 							$number_in_tri++;
@@ -65,21 +89,22 @@ class DefaultController extends Controller
 					{
 						$key="t" ."_".$number_in_tri;
 						$tri_container[$key]=$a_news;
-						if($number_in_tri>=3)//and if it's the end  of the container, we append the container
-						//to the returned array
-						{
-							$key="t" . $global_order;
-							$res_container[$key]=$tri_container;
-						}
 					}
 					else //we just add our news to the array
 					{
 						$key="n" . $global_order;
 						$res_container[$key]=$a_news;
 					}
-					
+					$old_ordernumber=$ordernumber;					
 					
 				}
+				if(count($tri_container)>0)//if we had a not-empty tri_container we have to
+				//push it in the res
+				{
+					$key="t" . $global_order;
+					$res_container[$key]=$tri_container;
+				}
+				dump($res_container);
 				return $res_container;
 	
 	
