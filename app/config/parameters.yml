@@ -1,0 +1,12 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_name: welcomevamabase
+    database_host: welcomevamabase.mysql.db
+    database_port: 3306
+    database_user: welcomevamabase
+    database_password: Dup9GU5i
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    secret: THISISNOTSECRETCHANGEIT
