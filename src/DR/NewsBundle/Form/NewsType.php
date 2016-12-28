@@ -8,6 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 
@@ -32,6 +33,8 @@ class NewsType extends AbstractType
         ->add('printtitle', CheckboxType::class, array('required' => false))
         ->add('printcontent', CheckboxType::class, array('required' => false))
         ->add('imgafcont', CheckboxType::class, array('required' => false))
+        ->add('partoftrinews', CheckboxType::class, array('required' => false))
+        ->add('ordernumber', NumberType::class)
         ->add('linknews',TextType::class, array('required' => false))
         ->add('image', ImageContType::class,array('required' => false));
     }

@@ -170,6 +170,12 @@ footer_text_style
 {
   background-color:#000d1a;
 }
+
+style_red_medium
+{
+	font-size: 20px;
+	color:red;
+}
 style_title
 {
 	font-size: 50px;
