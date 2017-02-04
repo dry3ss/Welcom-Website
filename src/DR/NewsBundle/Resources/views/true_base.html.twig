@@ -43,8 +43,14 @@
     		{% for news_or_tri_news in TWIG_newslist_main  %}
     			{% if news_or_tri_news is iterable%} 
     			    {# if it's an array #}
-    				{% include "DRNewsBundle:base_views:news_TRI_fragment.html.twig" with {'tri_news_array': news_or_tri_news } only %}
-    				
+    			    <div class="big_show_only">
+    				    {% include "DRNewsBundle:base_views:news_TRI_fragment.html.twig" with {'tri_news_array': news_or_tri_news } only %}
+    				</div>
+    				<div class="small_show_only">
+    				    {% for a_news in news_or_tri_news %}
+                            {% include "DRNewsBundle:base_views:news_fragment.html.twig" with  {'a_news':  a_news} only %}
+                        {% endfor %}
+    				</div>
     			{% else %}
     				{% include "DRNewsBundle:base_views:news_fragment.html.twig" with  {'a_news':  news_or_tri_news} only %}
     			{% endif %}

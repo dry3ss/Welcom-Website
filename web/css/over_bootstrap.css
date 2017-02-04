@@ -17,6 +17,21 @@
 	/color: rgba(252,121,45,1);
 	color: rgba(100,162,217,1);
 }
+/*---------------------TRI_NEWS FIX SMALL SCREENS-------------*/
+@media only screen and (max-width : 768px) 
+{
+	.big_show_only
+	{
+		display: none;
+	}
+}
+@media only screen and (min-width : 768px) 
+{
+	.small_show_only
+	{
+		display: none;
+	}
+}
 
 
 
