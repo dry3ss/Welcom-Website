@@ -56,17 +56,9 @@
 {% endblock %}
 
 {% block pre_and_footer %}
-    {% block emptyPreFooter %}
-    	<div class="row  height_pre_footer">
-        	<div class= "col-sm-12 height_100pc">
-        	{% if not CONF_logo_scrollfix %}
-        		<img src={{  asset("banner_welcom.png") }} id="logo_scroll_fix" class="max_width_100 position_absolute "/>
-        	{% endif %}
-        	</div>		
-        </div>
-    {% endblock %}
+
     {% block footer_ %}
-    	<div class="position_absolute null_pos_bottom no_pad_no_marg">
+    	<div>
         	<div class="row ">
             	<div class= "col-sm-12 backgr_style height_100pc no_pad_no_marg" >
             		<footer> 

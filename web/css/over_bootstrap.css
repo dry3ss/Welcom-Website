@@ -55,13 +55,13 @@
 /*------------------PRE-FOOTER/ FOOTER----------------------*/
 .height_pre_footer
 {
-	height: 620px;
-	height: 94vh;
+	height: 60px;
+	height: 10vh;
 }
 
 footer_text_style
 {
-	font-family: Acme,'Architects daughter','Century Gothic', 'sans-serif';
+	font-family: Acme,'Century Gothic', 'sans-serif';
 	font-size: 17px;
 	color:#eaeaea;
 }
@@ -156,11 +156,11 @@ footer_text_style
 }
 .page_top_height
 {
-	height: 10vh;
+	height: 2.5vh;
 }
 .page_top_half_height
 {
-	height: 5vh;
+	height: 2.5vh;
 }
 .page_top_height_img
 {
@@ -170,41 +170,34 @@ footer_text_style
 {
   background-color:#000d1a;
 }
-
-style_red_medium
-{
-	font-size: 20px;
-	color:red;
-}
 style_title
 {
-	font-size: 50px;
-	font-family: Acme,"Comic Sans MS",Verdana;
+	font-size: 30px;
+	font-family: Calibri,"Comic Sans MS",Verdana;
 	color: rgba(252,121,45,1);	
 }
 style_sub_title
 {
-	font-size: 200%;
-	font-family: Acme,"Comic Sans MS",Verdana;
+	font-size: 150%;
+	font-family: Calibri,"Comic Sans MS",Verdana;
 	color: rgba(252,121,45,1);	
 }
-
 style_news_published
 {
 	font-size: 35px;
-	font-family: 'Architects daughter',cursive;
+	font-family: cursive;
 	color: rgba(100,162,217,1);		
 }
 style_news_author
 {
 	font-size: 35px;
-	font-family: 'Kaushan Script',cursive;
+	font-family: cursive;
 	color: rgba(100,162,217,1);		
 }
 style_content
 {
-	font-size: 25px;
-	font-family: 'Architects daughter',Verdana;
+	font-size: 20px;
+	font-family: 'Calibri';
 	line-height:105%;
 	color: rgba(100,162,217,1);	
 	
@@ -222,9 +215,8 @@ style_credit
 {
 	  	padding-right: 10%;
   	    padding-left: 10%;
-	    padding-top: 5%;
-	    padding-bottom: 5%;
-
+	    padding-top: 2%;
+	    padding-bottom: 2%;
 	    border-radius: 6px;	    	
 }
 .news_title_height
@@ -239,24 +231,24 @@ style_credit
 {
 	  	padding-right: 10px;
   	    padding-left: 10px;
-	    padding-top: 50px;
+	    padding-top: 0px;
 	    padding-bottom: 0px;
 	    	
 		padding-right: 8%;
   	    padding-left: 8%;
-	    padding-top: 3%;
-	    padding-bottom: 0px;
+	    padding-top: 0%;
+	    padding-bottom: 0%;
 }
 .padding_sub_title
 {
 	  	padding-right: 5px;
   	    padding-left: 5px;
-	    padding-top: 25px;
+	    padding-top: 0px;
 	    padding-bottom: 0px;
 	    	
 		padding-right: 4%;
   	    padding-left: 4%;
-	    padding-top: 1%;
+	    padding-top: 0px;
 	    padding-bottom: 0px;
 }
 /*----------------EQUALIZE COLUMNS HEIGHTS----------*/

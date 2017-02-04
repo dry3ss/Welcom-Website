@@ -16,12 +16,14 @@
             			<div class="col-sm-offset-2 col-sm-8 textcenter padding_title">
             				<style_title class="textcenter">
             				    {% block NewsTitle %} {{ a_news.title }}{% endblock %} 
-            				</style_title>            				
-            				<div class="textright no_pad_no_marg">            				
-            					<style_news_published >
-            						Published the {{ a_news.date|date("d/m/Y") }} by <style_news_author>{{ a_news.author }}</style_news_author>
-            					</style_news_published>            				
-            				</div>
+            				</style_title>       
+            				{# deleted on demand:            				
+                				<div class="textright no_pad_no_marg">             				    				
+                					<style_news_published >
+                						Published the {{ a_news.date|date("d/m/Y") }} by <style_news_author>{{ a_news.author }}</style_news_author>
+                					</style_news_published>            					          				
+                				</div>
+            				#}  
             			</div>
             		</div>
             	</div>
