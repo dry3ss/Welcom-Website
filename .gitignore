@@ -15,7 +15,6 @@
 /vendor/
 /web/bundles/
 /web/image_db/
-src/DR/NewsBundle/DataFixtures/ORM/LoadNewsData_with_IMGs.php
-src/DR/UserBundle/DataFixtures/ORM/LoadUsers.php
+src/DR/UserBundle/DataFixtures/ORM/LoadUsers.php.back
 
 

@@ -65,7 +65,7 @@ class LoadUsers implements FixtureInterface, ContainerAwareInterface
 		$annaAdmin->setUsername('anna_admin');
 		$annaAdmin->setEmail('anna_admin@symfony.com');
 		$annaAdmin->setRoles(['ROLE_ADMIN']);
-		$encodedPassword = $passwordEncoder->encodePassword($annaAdmin, '123456789');
+		$encodedPassword = $passwordEncoder->encodePassword($annaAdmin, '123456789') ;  
 		$annaAdmin->setPassword($encodedPassword);
 		$annaAdmin->setEnabled(true);
 		$manager->persist($annaAdmin);
