@@ -70,7 +70,7 @@ class ImageManagementController extends Controller
 			$em->flush();
 			$this->addFlash('success', 'Every (not default) image was deleted');
 				
-			return $this->redirectToRoute('delete_all_img');			
+			return $this->redirectToRoute('delete_img');			
 		}
 		if ($formD->isSubmitted() && $formD->isValid())
 		{
@@ -80,7 +80,7 @@ class ImageManagementController extends Controller
 			foreach($delete_options as $choice)
 			{
 				$img_ch=$choice->getToBeDeleted();
-				if($img_ch)
+				if($img_ch && $choice->getCategory() !="default")
 				{
 					$del++;
 					$mod_news=$choice->getNews();
@@ -96,12 +96,12 @@ class ImageManagementController extends Controller
 			{
 				$em->flush();
 				$this->addFlash('success', "Successfully deleted "."$del"." imgs");
-				return $this->redirectToRoute('delete_all_img');
+				return $this->redirectToRoute('delete_img');
 			}
 			else
 			{
 				$this->addFlash('success', "No img deleted");
-				return $this->redirectToRoute('delete_all_img');
+				return $this->redirectToRoute('delete_img');
 			}
 		
 		}
